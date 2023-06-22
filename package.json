@@ -2,15 +2,23 @@
   "name": "variables2json",
   "version": "1.0.0",
   "description": "Your Figma Plugin",
-  "main": "code.js",
+  "main": "index.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "watch": "npm run build -- --watch"
+    "build": "npm run build:ui && npm run build:main -- --minify",
+    "build:main": "esbuild src/code.ts --bundle --outfile=dist/code.js",
+    "build:ui": "npx vite build --minify esbuild --emptyOutDir=false --target=ES6",
+    "build:watch": "concurrently -n widget,iframe \"npm run build:main -- --watch\" \"npm run build:ui -- --watch\"",
+    "dev": "concurrently -n build,vite 'npm:build:watch' 'vite'"
   },
   "author": "Mark Mooibroek",
-  "license": "",
-  "devDependencies": {
-    "@figma/plugin-typings": "*",
-    "typescript": "*"
+  "license": "ISC",
+  "dependencies": {
+    "@figma/plugin-typings": "^1.62.0",
+    "typescript": "*",
+    "concurrently": "^8.0.1",
+    "esbuild": "^0.17.14",
+    "prettier": "^2.8.7",
+    "vite": "^4.2.1",
+    "vite-plugin-singlefile": "^0.13.3"
   }
 }

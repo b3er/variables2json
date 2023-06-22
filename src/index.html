@@ -68,6 +68,7 @@
     background-color: var(--figma-color-bg-component);
   }
 </style>
+
 <main>
   <button id="export" type="button">Export Variables</button>
   <textarea
@@ -75,6 +76,7 @@
     readonly
   ></textarea>
 </main>
+
 <script>
   window.onmessage = ({ data: { pluginMessage } }) => {
     if (pluginMessage.type === "EXPORT_RESULT") {

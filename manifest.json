@@ -3,7 +3,7 @@
   "id": "1253571037276959291",
   "api": "1.0.0",
   "main": "dist/code.js",
-  "ui": { "export": "dist/export.html" },
+  "ui": { "export": "dist/index.html" },
   "capabilities": [],
   "enableProposedApi": false,
   "editorType": [
