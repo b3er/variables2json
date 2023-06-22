@@ -4,21 +4,23 @@
   "description": "Your Figma Plugin",
   "main": "index.js",
   "scripts": {
-    "build": "npm run build:ui && npm run build:main -- --minify",
-    "build:main": "esbuild src/code.ts --bundle --outfile=dist/code.js",
-    "build:ui": "npx vite build --minify esbuild --emptyOutDir=false --target=ES6",
-    "build:watch": "concurrently -n widget,iframe \"npm run build:main -- --watch\" \"npm run build:ui -- --watch\"",
-    "dev": "concurrently -n build,vite 'npm:build:watch' 'vite'"
+    "start": "concurrently --kill-others -p \"{name}\" -n \"ui  ,code\" -c \"cyan.bold,green.bold\" \"npm run start:ui\" \"npm run start:code\"",
+    "start:ui": "vite build --watch --config vite-ui.config.js",
+    "start:code": "vite build --watch --config vite-code.config.js",
+    "build": "vite build --config vite-ui.config.js && vite build --config vite-code.config.js"
   },
   "author": "Mark Mooibroek",
   "license": "ISC",
   "dependencies": {
-    "@figma/plugin-typings": "^1.62.0",
-    "typescript": "*",
-    "concurrently": "^8.0.1",
-    "esbuild": "^0.17.14",
-    "prettier": "^2.8.7",
-    "vite": "^4.2.1",
-    "vite-plugin-singlefile": "^0.13.3"
+    "@figma/plugin-typings": "^1.40.0",
+    "typescript": "^4.5.4",
+    "vue": "^3.2.26"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.0.1",
+    "@vue/compiler-sfc": "^3.2.26",
+    "concurrently": "^7.6.0",
+    "vite": "^2.7.10",
+    "vite-plugin-singlefile": "^0.6.3"
   }
 }

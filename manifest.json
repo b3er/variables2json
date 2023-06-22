@@ -2,8 +2,8 @@
   "name": "variables2json",
   "id": "1253571037276959291",
   "api": "1.0.0",
-  "main": "dist/code.js",
-  "ui": { "export": "dist/index.html" },
+  "main":  "dist/src/code/code.js",
+  "ui": "dist/src/ui/ui.html",
   "capabilities": [],
   "enableProposedApi": false,
   "editorType": [
