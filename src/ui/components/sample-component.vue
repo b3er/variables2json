@@ -15,8 +15,8 @@
 <template>
   <h2>{{ title }}</h2>
   <p>Count: <input id="count" v-model="count"></p>
-  <button id="create" @click="create()">Create</button>
-  <button id="cancel" @click="cancel()">Cancel</button>
+  <button class='button button--primary' id="create" @click="create()">Create</button>
+  <button class='button button--primary-destructive' id="cancel" @click="cancel()">Cancel</button>
 </template>
 
 <style lang="scss">
