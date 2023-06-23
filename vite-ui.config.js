@@ -12,12 +12,14 @@ export default defineConfig({
 		chunkSizeWarningLimit: 100000000,
 		cssCodeSplit: false,
 		brotliSize: false,
-    emptyOutDir: false,
+    	emptyOutDir: false,
 		rollupOptions: {
-			inlineDynamicImports: true,
-      input: {
-        index: path.resolve(__dirname, "src/ui/ui.html"),
-      },
+			output: {
+				inlineDynamicImports: true,
+			},
+			input: {
+				index: path.resolve(__dirname, "src/ui/ui.html"),
+			},
 		},
 	},
 })
