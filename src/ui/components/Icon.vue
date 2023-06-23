@@ -48,5 +48,6 @@ let props = defineProps<{
 
 .plugin-icon:hover {
     background-color: var(--colors-selected);
+    border-radius: 2px;
 }
 </style>

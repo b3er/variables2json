@@ -5,7 +5,7 @@ import { IconType } from '../models';
 </script>
 
 <template>
-  <div class="toolbar">
+  <div class="toolbar bb">
     <div class="left-icons">
       <Icon :type="IconType.Expand" />
       <Icon :type="IconType.Collapse" />

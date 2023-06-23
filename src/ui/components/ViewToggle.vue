@@ -13,7 +13,7 @@ let onClick = (value: boolean) => {
 </script>
 
 <template>
-    <div>
+    <div class="toggle">
         <Icon :type="IconType.List" :class="listShowing ? 'active' : ''" @click="() => onClick(true)" />
         <Icon :type="IconType.Json" :class="!listShowing ? 'active' : ''" @click="() => onClick(false)" />
     </div>
@@ -23,5 +23,11 @@ let onClick = (value: boolean) => {
 <style scoped>
 .active {
     background-color: var(--colors-selected);
+    border-radius: 2px;
+}
+
+.toggle {
+    display: flex;
+    justify-content: center;
 }
 </style>
