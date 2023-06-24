@@ -2,21 +2,30 @@
 import { computed } from 'vue';
 
 let props = defineProps<{
-    color: string;
+    color: {
+        r: number;
+        g: number;
+        b: number;
+        a: number;
+    };
 }>();
 
 let solidColor = computed(() => {
+    let r = props.color.r * 255;
+    let g = props.color.g * 255;
+    let b = props.color.b * 255;
 
-    // If rgba, get r, g, b parts and set opacity to 1
-    // Regex to match rgba(0, 0, 0, 0.5)
-    let rgbaRegex = /rgba\((\d+), (\d+), (\d+), (\d+\.?\d*)\)/;
-    let match = props.color.match(rgbaRegex);
-    if (match) {
-        let [_, r, g, b] = match;
-        return `rgba(${r}, ${g}, ${b}, 1)`;
-    } else {
-        return props.color;
-    }
+    return `rgba(${r}, ${g}, ${b}, 1)`;
+});
+
+let actualColor = computed(() => {
+
+    let r = props.color.r * 255;
+    let g = props.color.g * 255;
+    let b = props.color.b * 255;
+    let a = props.color.a;
+
+    return `rgba(${r}, ${g}, ${b}, ${a})`;
 });
 
 
@@ -27,7 +36,7 @@ let solidColor = computed(() => {
         <div class="solid-panel" :style="{ backgroundColor: solidColor }" />
         <div class="opacity">
             <div class="opacity-bg" />
-            <div class="opacity-panel" :style="{ backgroundColor: color }" />
+            <div class="opacity-panel" :style="{ backgroundColor: actualColor }" />
         </div>
     </div>
 </template>

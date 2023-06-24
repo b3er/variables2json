@@ -1,6 +1,17 @@
 <script lang="ts" setup>
 import Navigation from './components/Navigation.vue';
 import Footer from './components/Footer.vue';
+import { useStore } from 'vuex';
+
+let store = useStore();
+
+window.onmessage = (e) => {
+
+  if (e.data.pluginMessage.type === 'init') {
+    console.log('init', e.data.pluginMessage.data);
+    store.commit('update', e.data.pluginMessage.data);
+  }
+};
 
 </script>
 

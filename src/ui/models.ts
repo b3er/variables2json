@@ -19,7 +19,7 @@ export enum TokenType {
 
 export interface ModeValue {
     modeName: string;
-    value: string;
+    value: any;
 }
 
 export interface VariableToken {
@@ -33,6 +33,13 @@ export interface VariableGroup {
     name: string;
     collapsed: boolean;
     comingSoon: boolean;
+    type: TokenType,
     tokens: Array<VariableToken> | undefined;
   }
   
+
+export interface AppState {
+    version: string;
+    loaded: boolean;
+    variables: Array<VariableToken>;
+}

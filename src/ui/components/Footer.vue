@@ -1,10 +1,17 @@
 <script lang="ts" setup>
 
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+
+let store = useStore();
+
+let version = computed<string>(() => store.state.version);
+
 </script>
 
 <template>
     <footer class="bt">
-        <span class="small">v1.0.0-dev</span>
+        <span class="small">v{{ version }}</span>
     </footer>
 </template>
 
