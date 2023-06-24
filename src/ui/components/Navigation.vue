@@ -1,10 +1,12 @@
 <script lang="ts" setup>
+import { useRoute } from 'vue-router';
 
+const route = useRoute();
 </script>
 
 <template>
     <div class="nav bb">
-        <router-link class="item" to="/">Variables</router-link>
+        <router-link class="item" to="/variables/list" :class="[{'router-link-active': route.name === 'variables'}]">Variables</router-link>
         <router-link class="item" to="/composites">Composites</router-link>
     </div>
     <Divider />

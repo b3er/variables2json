@@ -39,6 +39,10 @@ import Footer from './components/Footer.vue';
 
 html,
 body {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
   height: 100%;
   width: 100%;
   padding: 0;
@@ -77,6 +81,10 @@ main {
   font-weight: 400;
 }
 
+.semi {
+  font-weight: 500;
+}
+
 .small {
   font-size: 9px;
   line-height: 14px;
@@ -89,5 +97,10 @@ main {
 
 .bt {
   border-top: 1px solid var(--colors-divider);
+}
+
+.active {
+  background-color: var(--colors-selected);
+  border-radius: 2px;
 }
 </style>

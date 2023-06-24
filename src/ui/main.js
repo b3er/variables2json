@@ -1,11 +1,13 @@
 import { createApp } from "vue";
 import ui from "./ui.vue";
-import SampleComponent from "./pages/Variables.vue";
+import Variables from "./pages/Variables.vue";
 import Composites from "./pages/Composites.vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 
+
 const routes = [
-  { path: "/", component: SampleComponent },
+  { path: '/', redirect: '/variables/list' },
+  { path: "/variables/:type", component: Variables, name: 'variables' },
   { path: "/composites", component: Composites },
 ];
 
