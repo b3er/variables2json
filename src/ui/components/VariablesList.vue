@@ -1,87 +1,181 @@
 <script lang="ts" setup>
 import Icon from './Icon.vue';
-import { IconType, VariableGroup } from '../models';
-import { ref } from 'vue';
+import VariableListPanel from './VariableListPanel.vue';
+import { IconType, VariableGroup, VariableToken, ModeValue, TokenType } from '../models';
+import { ref, toValue } from 'vue';
+import ColorBox from './ColorBox.vue';
 
-let list = ref<Record<string, VariableGroup>>({
-  'Colors': { collapsed: true, comingSoon: false },
-  'Numbers': { collapsed: true, comingSoon: false },
-  'Strings': { collapsed: true, comingSoon: false },
-  'Booleans': { collapsed: true, comingSoon: false },
-  'Typography': { collapsed: true, comingSoon: true },
-  'Effects': { collapsed: true, comingSoon: true },
-})
 
-function toggle(title: string) {
+let list = ref<Array<VariableGroup>>([
+  {
+    name: 'Colors',
+    collapsed: true,
+    comingSoon: false,
+    tokens: [
+      {
+        collection: 'Theme',
+        name: 'colors/windowBackground',
+        type: TokenType.Color,
+        values: [
+          {
+            modeName: 'Light',
+            value: 'rgba(255, 255, 255, .5)'
+          },
+          {
+            modeName: 'Dark',
+            value: '#2C2C2C'
+          }
+        ]
+      }
+    ],
+  },
+  {
+    name: 'Numbers',
+    collapsed: true,
+    comingSoon: false,
+    tokens: [
+
+    ]
+  },
+  {
+    name: 'Strings',
+    collapsed: true,
+    comingSoon: false,
+    tokens: [
+
+    ]
+  },
+  {
+    name: 'Booleans',
+    collapsed: true,
+    comingSoon: false,
+    tokens: [
+
+    ]
+  },
+  {
+    name: 'Typography',
+    collapsed: true,
+    comingSoon: true,
+    tokens: [
+
+    ]
+  },
+  {
+    name: 'Effects',
+    collapsed: true,
+    comingSoon: true,
+    tokens: [
+
+    ]
+  },
+])
+
+
+function toggle(index: number) {
   let values = list.value;
-  let old = values[title];
+  let old = values[index];
 
   if (old.comingSoon) return;
-
-  list.value = {
-    ...list.value,
-    [title]: {
-      ...old,
-      collapsed: !old.collapsed
-    }
+  list.value[index] = {
+    ...old,
+    collapsed: !old.collapsed
   }
 }
+
+function expandAll() {
+  list.value.map((group) => {
+    if (!group.comingSoon) {
+      group.collapsed = false;
+    }
+  })
+}
+
+function collapseAll() {
+  list.value.map((group) => {
+    group.collapsed = true;
+  })
+}
+
+defineExpose({
+  expandAll,
+  collapseAll
+})
+
 </script>
 
 <template>
-  <div class="card" :class="group.collapsed ? 'collapsed' : 'open'" v-for="(group, title) in list" :key="title">
-    <header class="card-header semi bb" :class="group.comingSoon ? 'disabled' : ''" @click="() => toggle(title)">
-      <div class="leading">
-        <span class="card-header-icon">
-          <Icon :type="IconType.CaretRight" v-if="group.collapsed" :muted="group.collapsed" />
-          <Icon :type="IconType.CaretDown" v-if="!group.collapsed" :muted="group.collapsed" />
-        </span>
+  <div class="page">
+    <div class="scroll-view">
+      <VariableListPanel v-for="(group, index) in list" :collapsed="group.collapsed" :name="group.name"
+        :on-click="() => toggle(index)" :coming-soon="group.comingSoon">
 
-        {{ title }}
-      </div>
-      <div v-if="group.comingSoon" class="small">
-        Coming soon
-      </div>
-    </header>
-    <div class="card-content" :class="{ 'is-hidden': group.collapsed }">
-      <div class="content">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.</p>
-      </div>
+        <div v-for="token in group.tokens" class="token-row row regular">
+          <span class="collection">{{ token.collection }}</span>
+          <span class="name">{{ token.name }}</span>
+
+          <div class="values">
+            <div v-for="value in token.values" class="value">
+              <VTooltip>
+                <ColorBox v-if="token.type == TokenType.Color" :color="value.value" />
+
+                <template #popper>
+                  {{ value.modeName }}: {{ value.value }}
+                </template>
+              </VTooltip>
+            </div>
+          </div>
+        </div>
+      </VariableListPanel>
     </div>
-
   </div>
 </template>
 
 <style scoped>
-.card-header {
+.page {
+  overflow-y: hidden;
+  height: 92%;
+}
+
+.scroll-view {
+  flex: auto;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: auto;
+}
+
+.row {
   display: flex;
-  justify-content: space-between;
-  padding: 12px 8px;
+  align-items: center;
+  padding: 4px 8px 4px 28px;
   align-self: stretch;
+  min-height: 40px;
+  color: var(--colors-muted-text);
 }
 
-.leading {
+.collection {
+  width: 60px;
+  text-overflow: ellipsis;
+  max-lines: 1;
+}
+
+.name {
+  flex: auto;
+  text-overflow: ellipsis;
+  max-lines: 1;
+}
+
+.values {
   display: flex;
-  align-items: flex-start;
-  align-self: stretch;
+  align-items: center;
+  gap: 2px;
 }
 
-.card-header:not(.disabled):hover {
-  cursor: pointer;
-  background-color: var(--colors-selected);
-}
-
-.card-header-icon {
+.value {
   width: 16px;
   height: 16px;
-}
-
-.collapsed {
-  color: var(--colors-muted-text);
-  fill: var(--colors-muted-text) !important;
-}
-
-.is-hidden {
-  display: none;
+  border-radius: 4px;
+  border: 2px solid var(--colors-divider);
 }
 </style>

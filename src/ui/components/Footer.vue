@@ -12,11 +12,10 @@
 <style scoped>
 footer {
     display: flex;
-    height: 32px;
     justify-content: flex-end;
     align-items: center;
     gap: 4px;
-    padding: 0 1rem;
+    padding: 0.5rem 1rem;
     align-self: stretch;
 }
 

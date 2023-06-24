@@ -14,7 +14,9 @@ import Footer from './components/Footer.vue';
   <Footer />
 </template>
 
-<style>
+<style lang="scss">
+@import 'floating-vue/dist/style.css';
+
 .figma-light {
   --colors-panel-bg: #FFFFFF;
   --colors-panel-fg: #2C2C2C;
@@ -27,6 +29,7 @@ import Footer from './components/Footer.vue';
 }
 
 .figma-dark {
+  color-scheme: dark;
   --colors-panel-bg: rgba(255, 255, 255, 0.1);
   --colors-panel-fg: #FFFFFF;
   --colors-window-background: #2C2C2C;
