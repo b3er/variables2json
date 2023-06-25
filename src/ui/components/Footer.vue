@@ -32,7 +32,12 @@ function downloadJson() {
 
         <span class="small">v{{ version }}</span>
 
-        <Icon :type="IconType.Download" @click="downloadJson" />
+        <div class="icons">
+            <a href="https://github.com/mark-nicepants/variables2json-docs" target="_blank">
+                <Icon :type="IconType.Github" />
+            </a>
+            <Icon :type="IconType.Download" @click="downloadJson" />
+        </div>
     </footer>
 </template>
 
@@ -42,7 +47,7 @@ footer {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 4px;
+    gap: 8px;
     padding: 0 0.5rem;
     align-self: stretch;
 }

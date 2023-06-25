@@ -6,7 +6,7 @@ figma.showUI(__html__, { themeColors: true, width: 320, height: 500 });
 
 function getState(): AppState {
   return {
-    version: "1.0.0",
+    version: "1.0.1",
     loaded: true,
     variables: getVariables(),
   } as AppState;

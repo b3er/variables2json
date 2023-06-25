@@ -10,6 +10,7 @@ export enum IconType {
     Check = `check`,
     Uncheck = `uncheck`,
     Download = `download`,
+    Github = `github`,
 }
 
 export enum TokenType {
