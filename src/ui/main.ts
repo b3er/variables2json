@@ -28,7 +28,6 @@ const store = createStore({
   },
   mutations: {
     update (state: AppState, data: AppState) {
-      console.log('update it!');
       state.version = data.version;
       state.loaded = data.loaded;
       state.variables = data.variables;

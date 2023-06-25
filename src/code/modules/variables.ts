@@ -16,8 +16,6 @@ function processCollection(collection: VariableCollection): Array<VariableToken>
 
     if (!variable) return;
 
-    console.log(variable.resolvedType);
-
     let type : TokenType;
     switch (variable.resolvedType) {
       case "COLOR":
@@ -42,7 +40,10 @@ function processCollection(collection: VariableCollection): Array<VariableToken>
         
         let value = variable.valuesByMode[mode.modeId];
         if(isVariableAlias(value)) {
-          value = `{${figma.variables.getVariableById(value.id)?.name.replace(/\//g, ".")}}`;
+          let reference = figma.variables.getVariableById(value.id);
+          if(reference != undefined) {
+            value = reference.valuesByMode[mode.modeId];
+          }
         }
 
         return {

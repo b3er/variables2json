@@ -4,8 +4,9 @@ import { VariableGroup, TokenType, AppState, VariableToken } from '../models';
 import { computed, ref } from 'vue';
 import ColorBox from './ColorBox.vue';
 import { useStore } from 'vuex';
+import { Store } from 'vuex/types/index.js';
 
-let store = useStore();
+let store = useStore() as Store<AppState>;
 
 function sanitizedValue(type: TokenType, value: any) {
   if (type == TokenType.Color) {
@@ -63,7 +64,7 @@ let rowStates = ref<Map<TokenType, RowState>>(new Map<TokenType, RowState>([
 ]));
 
 let list = computed<Map<TokenType, Array<VariableToken>>>(() => {
-  let variables = (store.state as AppState).variables;
+  let variables = store.state.variables;
 
   let groups = new Map<TokenType, Array<VariableToken>>();
 

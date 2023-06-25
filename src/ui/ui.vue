@@ -7,8 +7,7 @@ let store = useStore();
 
 window.onmessage = (e) => {
 
-  if (e.data.pluginMessage.type === 'init') {
-    console.log('init', e.data.pluginMessage.data);
+  if (e.data.pluginMessage.type === 'updateState') {
     store.commit('update', e.data.pluginMessage.data);
   }
 };

@@ -2,8 +2,10 @@
 
 import { computed } from 'vue';
 import { useStore } from 'vuex';
+import { Store } from 'vuex/types/index.js';
+import { AppState } from '../models';
 
-let store = useStore();
+let store = useStore() as Store<AppState>;
 
 let version = computed<string>(() => store.state.version);
 

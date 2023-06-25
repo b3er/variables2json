@@ -1,15 +1,22 @@
 
+import { AppState } from "../ui/models";
 import { getVariables } from "./modules/variables";
 
 figma.showUI(__html__, { themeColors: true, width: 320, height: 500 });
 
-let state = {
-  version: "1.0.0",
-  loaded: true,
-  variables: getVariables(),
-};
+function getState(): AppState {
+  return {
+    version: "1.0.0",
+    loaded: true,
+    variables: getVariables(),
+  } as AppState;
+}
 
-figma.ui.postMessage({type: 'init', data: state});
+figma.ui.postMessage({type: 'updateState', data: getState()});
+
+figma.on("documentchange", () => {
+  figma.ui.postMessage({type: 'updateState', data: getState()});
+});
 
 // Calls to "parent.postMessage" from within the HTML page will trigger this
 // callback. The callback will be passed the "pluginMessage" property of the
