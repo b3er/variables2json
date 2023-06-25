@@ -59,7 +59,7 @@ function processCollection(collection: VariableCollection): Array<VariableToken>
             r:  Math.floor(value.r * 255),
             g: Math.floor(value.g * 255),
             b: Math.floor(value.b * 255),
-            a: value.a,
+            a: Number(value.a.toFixed(2)),
           };
         }
 
