@@ -5,7 +5,7 @@ import Variables from "./pages/Variables.vue";
 import Composites from "./pages/Composites.vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 import FloatingVue from "floating-vue";
-import { AppState, VariableGroup } from "./models";
+import { AppState } from "./models";
 
 const routes = [
   { path: "/", redirect: "/variables/list" },

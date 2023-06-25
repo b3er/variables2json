@@ -30,9 +30,6 @@ export interface VariableToken {
 }
 
 export interface VariableGroup {
-    name: string;
-    collapsed: boolean;
-    comingSoon: boolean;
     type: TokenType,
     tokens: Array<VariableToken> | undefined;
   }

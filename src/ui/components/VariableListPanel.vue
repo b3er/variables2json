@@ -1,20 +1,28 @@
 <script lang="ts" setup>
 
 import Icon from './Icon.vue';
-import { IconType, VariableGroup, VariableToken, ModeValue, TokenType } from '../models';
+import { IconType } from '../models';
 
 let props = defineProps<{
     collapsed: boolean;
     comingSoon: boolean;
+    itemCount: number;
     name: string;
     onClick: () => void;
 }>()
 
+function requestClick() {
+    if (props.comingSoon || props.itemCount == 0) {
+        return;
+    }
+
+    props.onClick();
+}
 </script>
 
 <template>
     <div class="card" :class="props.collapsed ? 'collapsed' : 'open'">
-        <header class="card-header semi bb" :class="props.comingSoon ? 'disabled' : ''" @click="onClick">
+        <header class="card-header semi bb" :class="props.comingSoon || props.itemCount == 0 ? 'disabled' : ''" @click="requestClick">
             <div class="leading">
                 <span class="card-header-icon">
                     <Icon :type="IconType.CaretRight" v-if="props.collapsed" :muted="props.collapsed" />
@@ -23,8 +31,9 @@ let props = defineProps<{
 
                 {{ props.name }}
             </div>
-            <div v-if="props.comingSoon" class="small">
-                Coming soon
+            <div class="small">
+                <span v-if="props.comingSoon">Coming soon</span>
+                <span v-if="!props.comingSoon">{{ itemCount }} items</span>
             </div>
         </header>
         <div class="card-content bb" :class="{ 'is-hidden': props.collapsed }">

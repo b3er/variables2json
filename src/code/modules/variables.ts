@@ -1,4 +1,4 @@
-import { ModeValue, TokenType, VariableGroup, VariableToken } from "../../ui/models";
+import { ModeValue, TokenType, VariableToken } from "../../ui/models";
 
 function isVariableAlias(value: VariableValue): value is VariableAlias {
   return (value as VariableAlias).type === "VARIABLE_ALIAS";

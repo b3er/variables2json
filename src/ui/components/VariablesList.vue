@@ -23,67 +23,105 @@ function sanitizedValue(type: TokenType, value: any) {
   return value;
 }
 
-let collapsedStates = ref<Map<TokenType, boolean>>(new Map<TokenType, boolean>([
-  [TokenType.Color, true],
-  [TokenType.Number, true],
-  [TokenType.String, true],
-  [TokenType.Boolean, true],
-  [TokenType.Effect, true],
-  [TokenType.Typography, true],
+interface RowState {
+  collapsed: boolean;
+  name: string;
+  comingSoon: boolean;
+}
+
+let rowStates = ref<Map<TokenType, RowState>>(new Map<TokenType, RowState>([
+  [TokenType.Color, {
+    collapsed: true,
+    name: 'Colors',
+    comingSoon: false
+  }],
+  [TokenType.Number, {
+    collapsed: true,
+    name: 'Numbers',
+    comingSoon: false
+  }],
+  [TokenType.String, {
+    collapsed: true,
+    name: 'Strings',
+    comingSoon: false
+  }],
+  [TokenType.Boolean, {
+    collapsed: true,
+    name: 'Booleans',
+    comingSoon: false
+  }],
+  [TokenType.Typography, {
+    collapsed: true,
+    name: 'Typography',
+    comingSoon: true
+  }],
+  [TokenType.Effect, {
+    collapsed: true,
+    name: 'Effects',
+    comingSoon: true
+  }],
 ]));
 
-let list = computed<Array<VariableGroup>>(() => {
+let list = computed<Map<TokenType, Array<VariableToken>>>(() => {
   let variables = (store.state as AppState).variables;
-  let states = collapsedStates.value;
 
-  let groups = variables.reduce((groups, variable) => {
-    let group = groups.find((group) => group.name == variable.type);
-    states.get(variable.type);
+  let groups = new Map<TokenType, Array<VariableToken>>();
+
+  rowStates.value.forEach((value, key) => {
+    let group = groups.get(key);
 
     if (group == undefined) {
-      group = {
-        name: variable.type,
-        type: variable.type,
-        collapsed: states.get(variable.type) ?? true,
-        comingSoon: false,
-        tokens: []
-      } as VariableGroup;
-
-      groups.push(group);
+      group = new Array<VariableToken>();
+      groups.set(key, group);
     }
 
-    group!.tokens!.push(variable);
-
-    return groups;
-  }, new Array<VariableGroup>);
+    variables.forEach((variable) => {
+      if (variable.type == key) {
+        group!.push(variable);
+      }
+    });
+  });
 
   return groups;
 })
 
 function toggle(type: TokenType) {
-  collapsedStates.value.set(type, !collapsedStates.value.get(type));
+  let collapsed = rowStates.value.get(type)!.collapsed;
+  updateRow(type, !collapsed);
+}
+
+function updateRow(type: TokenType, collapsed: boolean) {
+  rowStates.value.set(type, {
+    ...rowStates.value.get(type)!,
+    collapsed: collapsed
+  });
 }
 
 function expandAll() {
-  collapsedStates.value = new Map<TokenType, boolean>([
-    [TokenType.Color, false],
-    [TokenType.Number, false],
-    [TokenType.String, false],
-    [TokenType.Boolean, false],
-    [TokenType.Effect, false],
-    [TokenType.Typography, false],
-  ]);
+  rowStates.value.forEach((value, key) => {
+    if (value.comingSoon || list.value.get(key)!.length == 0) {
+      return;
+    }
+    updateRow(key, false);
+  });
 }
 
 function collapseAll() {
-  collapsedStates.value = new Map<TokenType, boolean>([
-    [TokenType.Color, true],
-    [TokenType.Number, true],
-    [TokenType.String, true],
-    [TokenType.Boolean, true],
-    [TokenType.Effect, true],
-    [TokenType.Typography, true],
-  ]);
+  rowStates.value.forEach((value, key) => {
+    updateRow(key, true);
+  });
+}
+
+function comingSoon(type: TokenType) {
+  return rowStates.value.get(type)?.comingSoon == true;
+}
+
+function isCollapsed(type: TokenType): boolean {
+  return rowStates.value.get(type)?.collapsed == true;
+}
+
+function rowName(type: TokenType): string {
+  return rowStates.value.get(type)!.name;
 }
 
 defineExpose({
@@ -96,10 +134,10 @@ defineExpose({
 <template>
   <div class="page">
     <div class="scroll-view">
-      <VariableListPanel v-for="(group, index) in list" :collapsed="group.collapsed" :name="group.name"
-        :on-click="() => toggle(group.type)" :coming-soon="group.comingSoon">
+      <VariableListPanel v-for="[type, tokens] in list" :collapsed="isCollapsed(type)" :name="rowName(type)"
+        :on-click="() => toggle(type)" :coming-soon="comingSoon(type)" :item-count="tokens.length">
 
-        <div v-for="token in group.tokens" class="token-row row regular">
+        <div v-for="token in tokens" class="token-row row regular">
           <span class="collection">{{ token.collection }}</span>
           <span class="name">{{ token.name }}</span>
 
