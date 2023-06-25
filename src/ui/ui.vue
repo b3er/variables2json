@@ -6,7 +6,6 @@ import { useStore } from 'vuex';
 let store = useStore();
 
 window.onmessage = (e) => {
-
   if (e.data.pluginMessage.type === 'updateState') {
     store.commit('update', e.data.pluginMessage.data);
   }
@@ -80,11 +79,12 @@ body {
   font-weight: 600;
   line-height: 16px;
   letter-spacing: -0.11px;
+
+  overflow-x: hidden;
 }
 
 main {
   flex: auto;
-  overflow-x: hidden;
   overflow-y: auto;
   scroll-behavior: auto;
 }

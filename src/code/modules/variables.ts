@@ -4,6 +4,14 @@ function isVariableAlias(value: VariableValue): value is VariableAlias {
   return (value as VariableAlias).type === "VARIABLE_ALIAS";
 }
 
+function isRGBA(value: VariableValue): value is RGBA {
+  return (value as RGBA).a !== undefined;
+}
+
+function isRGB(value: VariableValue): value is RGB {
+  return (value as RGB).r !== undefined;
+}
+
 function processCollection(collection: VariableCollection): Array<VariableToken> {
   const variableIds = collection.variableIds;
   const modes = collection.modes;
@@ -44,6 +52,15 @@ function processCollection(collection: VariableCollection): Array<VariableToken>
           if(reference != undefined) {
             value = reference.valuesByMode[mode.modeId];
           }
+        }
+
+        if(isRGBA(value)) {
+          value = {
+            r:  Math.floor(value.r * 255),
+            g: Math.floor(value.g * 255),
+            b: Math.floor(value.b * 255),
+            a: value.a,
+          };
         }
 
         return {

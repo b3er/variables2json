@@ -11,18 +11,18 @@ let props = defineProps<{
 }>();
 
 let solidColor = computed(() => {
-    let r = props.color.r * 255;
-    let g = props.color.g * 255;
-    let b = props.color.b * 255;
+    let r = props.color.r;
+    let g = props.color.g;
+    let b = props.color.b;
 
     return `rgba(${r}, ${g}, ${b}, 1)`;
 });
 
 let actualColor = computed(() => {
 
-    let r = props.color.r * 255;
-    let g = props.color.g * 255;
-    let b = props.color.b * 255;
+    let r = props.color.r;
+    let g = props.color.g;
+    let b = props.color.b;
     let a = props.color.a;
 
     return `rgba(${r}, ${g}, ${b}, ${a})`;

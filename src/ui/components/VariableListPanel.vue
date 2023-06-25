@@ -22,7 +22,8 @@ function requestClick() {
 
 <template>
     <div class="card" :class="props.collapsed ? 'collapsed' : 'open'">
-        <header class="card-header semi bb" :class="props.comingSoon || props.itemCount == 0 ? 'disabled' : ''" @click="requestClick">
+        <header class="card-header semi bb" :class="props.comingSoon || props.itemCount == 0 ? 'disabled' : ''"
+            @click="requestClick">
             <div class="leading">
                 <span class="card-header-icon">
                     <Icon :type="IconType.CaretRight" v-if="props.collapsed" :muted="props.collapsed" />

@@ -9,6 +9,7 @@ export enum IconType {
     Text = `text`,
     Check = `check`,
     Uncheck = `uncheck`,
+    Download = `download`,
 }
 
 export enum TokenType {
@@ -43,3 +44,20 @@ export interface AppState {
     loaded: boolean;
     variables: Array<VariableToken>;
 }
+
+export interface VariableValue {
+    name: string;
+    type: TokenType
+    value: any;
+  }
+  
+  export  interface CollectionMode {
+    name: string;
+    variables: Array<VariableValue>;
+  }
+  
+  export interface Collection {
+    name: string;
+    modes: Array<CollectionMode>;
+  }
+  

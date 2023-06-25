@@ -13,15 +13,13 @@ let store = useStore() as Store<AppState>;
 
 function sanitizedValue(type: TokenType, value: any) {
   if (type == TokenType.Color) {
-    let r = Math.floor(value.r * 255);
-    let g = Math.floor(value.g * 255);
-    let b = Math.floor(value.b * 255);
+    let r = value.r.toString(16).padStart(2, '0');
+    let g = value.g.toString(16).padStart(2, '0');
+    let b = value.b.toString(16).padStart(2, '0');
     let a = value.a;
 
-    console.log(r, g, b, a);
-
     // To Hex string with alpha
-    return `#${r.toString(16)}${g.toString(16)}${b.toString(16)} (${Math.floor(a * 100)}%)`.toUpperCase();
+    return `#${r}${g}${b} (${Math.floor(a * 100)}%)`.toUpperCase();
   }
 
   return value;

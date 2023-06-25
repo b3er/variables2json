@@ -16,6 +16,7 @@ function expand() {
 function collapse() {
   variablesList.value?.collapseAll();
 }
+
 </script>
 
 <template>
@@ -23,8 +24,8 @@ function collapse() {
 
     <div class="toolbar bb">
       <div class="icons">
-        <Icon :type="IconType.Expand" @click="expand" />
-        <Icon :type="IconType.Collapse" @click="collapse" />
+        <Icon :type="IconType.Expand" @click="expand" v-if="route.params.type == 'list'" />
+        <Icon :type="IconType.Collapse" @click="collapse" v-if="route.params.type == 'list'" />
       </div>
 
       <div class="icons">
