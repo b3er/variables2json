@@ -20,6 +20,8 @@ function downloadJson() {
     el?.setAttribute("href", dataStr);
     el?.setAttribute("download", "variables.json");
     el?.click();
+
+    parent.postMessage({ pluginMessage: 'notify-downloaded' }, '*');
 }
 
 </script>
