@@ -5,6 +5,9 @@ import { computed, ref } from 'vue';
 import ColorBox from './ColorBox.vue';
 import { useStore } from 'vuex';
 import { Store } from 'vuex/types/index.js';
+import NumberBox from './NumberBox.vue';
+import StringBox from './StringBox.vue';
+import BooleanBox from './BooleanBox.vue';
 
 let store = useStore() as Store<AppState>;
 
@@ -138,7 +141,7 @@ defineExpose({
       <VariableListPanel v-for="[type, tokens] in list" :collapsed="isCollapsed(type)" :name="rowName(type)"
         :on-click="() => toggle(type)" :coming-soon="comingSoon(type)" :item-count="tokens.length">
 
-        <div v-for="token in tokens" class="token-row row regular">
+        <div v-for="token in tokens" class="token-row row regular bb">
           <span class="collection">{{ token.collection }}</span>
           <span class="name">{{ token.name }}</span>
 
@@ -146,6 +149,9 @@ defineExpose({
             <div v-for="value in token.values" class="value">
               <VTooltip>
                 <ColorBox v-if="token.type == TokenType.Color" :color="value.value" />
+                <NumberBox v-else-if="token.type == TokenType.Number" :number="value.value" />
+                <StringBox v-else-if="token.type == TokenType.String" />
+                <BooleanBox v-else-if="token.type == TokenType.Boolean" :value="value.value" />
 
                 <template #popper>
                   {{ value.modeName }}: {{ sanitizedValue(token.type, value.value) }}

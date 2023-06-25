@@ -6,6 +6,9 @@ export enum IconType {
     List = `list`,
     CaretRight = `caret-right`,
     CaretDown = `caret-down`,
+    Text = `text`,
+    Check = `check`,
+    Uncheck = `uncheck`,
 }
 
 export enum TokenType {

@@ -36,7 +36,7 @@ function requestClick() {
                 <span v-if="!props.comingSoon">{{ itemCount }} items</span>
             </div>
         </header>
-        <div class="card-content bb" :class="{ 'is-hidden': props.collapsed }">
+        <div class="card-content" :class="{ 'is-hidden': props.collapsed }">
             <slot />
         </div>
     </div>
