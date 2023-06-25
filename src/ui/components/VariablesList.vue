@@ -171,14 +171,6 @@ defineExpose({
   height: 92%;
 }
 
-.scroll-view {
-  flex: auto;
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  scroll-behavior: auto;
-}
-
 .row {
   display: flex;
   align-items: center;

@@ -116,4 +116,12 @@ main {
   background-color: var(--colors-selected);
   border-radius: 2px;
 }
+
+.scroll-view {
+  flex: auto;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: auto;
+}
 </style>
