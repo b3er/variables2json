@@ -1,9 +1,10 @@
 import { AppState, Collection, VariableValue } from "./models";
 
+
 export function jsonFromState(state: AppState): string {
     let output = new Array<Collection>();
     let variables = state.variables;
-
+    
     for (let variable of variables) {
         let collection = output.find(c => c.name == variable.collection);
 

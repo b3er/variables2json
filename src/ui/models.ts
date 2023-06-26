@@ -20,6 +20,7 @@ export enum TokenType {
     Boolean = `boolean`,
     Typography = `typography`,
     Effect = `effect`,
+    Grid = `grid`,
 }
 
 export interface ModeValue {
@@ -52,13 +53,13 @@ export interface VariableValue {
     value: any;
   }
   
-  export  interface CollectionMode {
-    name: string;
-    variables: Array<VariableValue>;
-  }
-  
-  export interface Collection {
-    name: string;
-    modes: Array<CollectionMode>;
-  }
+export  interface CollectionMode {
+  name: string;
+  variables: Array<VariableValue>;
+}
+
+export interface Collection {
+  name: string;
+  modes: Array<CollectionMode>;
+}
   

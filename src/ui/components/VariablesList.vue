@@ -28,39 +28,36 @@ function sanitizedValue(type: TokenType, value: any) {
 interface RowState {
   collapsed: boolean;
   name: string;
-  comingSoon: boolean;
 }
 
 let rowStates = ref<Map<TokenType, RowState>>(new Map<TokenType, RowState>([
   [TokenType.Color, {
     collapsed: true,
     name: 'Colors',
-    comingSoon: false
   }],
   [TokenType.Number, {
     collapsed: true,
     name: 'Numbers',
-    comingSoon: false
   }],
   [TokenType.String, {
     collapsed: true,
     name: 'Strings',
-    comingSoon: false
   }],
   [TokenType.Boolean, {
     collapsed: true,
     name: 'Booleans',
-    comingSoon: false
   }],
   [TokenType.Typography, {
     collapsed: true,
     name: 'Typography',
-    comingSoon: true
   }],
   [TokenType.Effect, {
     collapsed: true,
     name: 'Effects',
-    comingSoon: true
+  }],
+  [TokenType.Grid, {
+    collapsed: true,
+    name: 'Grids',
   }],
 ]));
 
@@ -101,7 +98,7 @@ function updateRow(type: TokenType, collapsed: boolean) {
 
 function expandAll() {
   rowStates.value.forEach((value, key) => {
-    if (value.comingSoon || list.value.get(key)!.length == 0) {
+    if (list.value.get(key)!.length == 0) {
       return;
     }
     updateRow(key, false);
@@ -112,10 +109,6 @@ function collapseAll() {
   rowStates.value.forEach((value, key) => {
     updateRow(key, true);
   });
-}
-
-function comingSoon(type: TokenType) {
-  return rowStates.value.get(type)?.comingSoon == true;
 }
 
 function isCollapsed(type: TokenType): boolean {
@@ -137,7 +130,7 @@ defineExpose({
   <div class="page">
     <div class="scroll-view">
       <VariableListPanel v-for="[type, tokens] in list" :collapsed="isCollapsed(type)" :name="rowName(type)"
-        :on-click="() => toggle(type)" :coming-soon="comingSoon(type)" :item-count="tokens.length">
+        :on-click="() => toggle(type)" :item-count="tokens.length">
 
         <div v-for="token in tokens" class="token-row row regular bb">
           <span class="collection">{{ token.collection }}</span>
@@ -179,7 +172,7 @@ defineExpose({
 }
 
 .collection {
-  width: 60px;
+  width: 70px;
   text-overflow: ellipsis;
   max-lines: 1;
 }

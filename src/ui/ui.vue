@@ -7,6 +7,7 @@ let store = useStore();
 
 window.onmessage = (e) => {
   if (e.data.pluginMessage.type === 'updateState') {
+    console.log('updateState', e.data.pluginMessage.data);
     store.commit('update', e.data.pluginMessage.data);
   }
 };
