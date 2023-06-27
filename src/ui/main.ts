@@ -19,7 +19,7 @@ const router = createRouter({
 });
 
 const store = createStore({
-  state () {
+  state() {
     return {
       version: "0.0.1",
       loaded: false,
@@ -27,7 +27,7 @@ const store = createStore({
     } as AppState
   },
   mutations: {
-    update (state: AppState, data: AppState) {
+    update(state: AppState, data: AppState) {
       state.version = data.version;
       state.loaded = data.loaded;
       state.variables = data.variables;

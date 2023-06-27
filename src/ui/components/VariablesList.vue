@@ -1,21 +1,21 @@
 <script lang="ts" setup>
-import VariableListPanel from './VariableListPanel.vue';
-import { VariableGroup, TokenType, AppState, VariableToken } from '../models';
-import { computed, ref } from 'vue';
-import ColorBox from './ColorBox.vue';
-import { useStore } from 'vuex';
-import { Store } from 'vuex/types/index.js';
-import NumberBox from './NumberBox.vue';
-import StringBox from './StringBox.vue';
-import BooleanBox from './BooleanBox.vue';
+import VariableListPanel from "./VariableListPanel.vue";
+import { VariableGroup, TokenType, AppState, VariableToken } from "../models";
+import { computed, ref } from "vue";
+import ColorBox from "./ColorBox.vue";
+import { useStore } from "vuex";
+import { Store } from "vuex/types/index.js";
+import NumberBox from "./NumberBox.vue";
+import StringBox from "./StringBox.vue";
+import BooleanBox from "./BooleanBox.vue";
 
 let store = useStore() as Store<AppState>;
 
 function sanitizedValue(type: TokenType, value: any) {
   if (type == TokenType.Color) {
-    let r = value.r.toString(16).padStart(2, '0');
-    let g = value.g.toString(16).padStart(2, '0');
-    let b = value.b.toString(16).padStart(2, '0');
+    let r = value.r.toString(16).padStart(2, "0");
+    let g = value.g.toString(16).padStart(2, "0");
+    let b = value.b.toString(16).padStart(2, "0");
     let a = value.a;
 
     // To Hex string with alpha
@@ -30,36 +30,59 @@ interface RowState {
   name: string;
 }
 
-let rowStates = ref<Map<TokenType, RowState>>(new Map<TokenType, RowState>([
-  [TokenType.Color, {
-    collapsed: true,
-    name: 'Colors',
-  }],
-  [TokenType.Number, {
-    collapsed: true,
-    name: 'Numbers',
-  }],
-  [TokenType.String, {
-    collapsed: true,
-    name: 'Strings',
-  }],
-  [TokenType.Boolean, {
-    collapsed: true,
-    name: 'Booleans',
-  }],
-  [TokenType.Typography, {
-    collapsed: true,
-    name: 'Typography',
-  }],
-  [TokenType.Effect, {
-    collapsed: true,
-    name: 'Effects',
-  }],
-  [TokenType.Grid, {
-    collapsed: true,
-    name: 'Grids',
-  }],
-]));
+let rowStates = ref<Map<TokenType, RowState>>(
+  new Map<TokenType, RowState>([
+    [
+      TokenType.Color,
+      {
+        collapsed: true,
+        name: "Colors",
+      },
+    ],
+    [
+      TokenType.Number,
+      {
+        collapsed: true,
+        name: "Numbers",
+      },
+    ],
+    [
+      TokenType.String,
+      {
+        collapsed: true,
+        name: "Strings",
+      },
+    ],
+    [
+      TokenType.Boolean,
+      {
+        collapsed: true,
+        name: "Booleans",
+      },
+    ],
+    [
+      TokenType.Typography,
+      {
+        collapsed: true,
+        name: "Typography",
+      },
+    ],
+    [
+      TokenType.Effect,
+      {
+        collapsed: true,
+        name: "Effects",
+      },
+    ],
+    [
+      TokenType.Grid,
+      {
+        collapsed: true,
+        name: "Grids",
+      },
+    ],
+  ])
+);
 
 let list = computed<Map<TokenType, Array<VariableToken>>>(() => {
   let variables = store.state.variables;
@@ -82,7 +105,7 @@ let list = computed<Map<TokenType, Array<VariableToken>>>(() => {
   });
 
   return groups;
-})
+});
 
 function toggle(type: TokenType) {
   let collapsed = rowStates.value.get(type)!.collapsed;
@@ -92,7 +115,7 @@ function toggle(type: TokenType) {
 function updateRow(type: TokenType, collapsed: boolean) {
   rowStates.value.set(type, {
     ...rowStates.value.get(type)!,
-    collapsed: collapsed
+    collapsed: collapsed,
   });
 }
 
@@ -121,33 +144,49 @@ function rowName(type: TokenType): string {
 
 defineExpose({
   expandAll,
-  collapseAll
-})
-
+  collapseAll,
+});
 </script>
 
 <template>
   <div class="page">
     <div class="scroll-view">
-      <VariableListPanel v-for="[type, tokens] in list" :collapsed="isCollapsed(type)" :name="rowName(type)"
-        :on-click="() => toggle(type)" :item-count="tokens.length">
-
+      <VariableListPanel
+        v-for="[type, tokens] in list"
+        :collapsed="isCollapsed(type)"
+        :name="rowName(type)"
+        :on-click="() => toggle(type)"
+        :item-count="tokens.length"
+      >
         <div v-for="token in tokens" class="token-row row regular bb">
           <span class="collection">{{ token.collection }}</span>
           <span class="name">{{ token.name }}</span>
 
           <div class="values">
-            <div v-for="value in token.values" class="value">
-              <VTooltip>
-                <ColorBox v-if="token.type == TokenType.Color" :color="value.value" />
-                <NumberBox v-else-if="token.type == TokenType.Number" :number="value.value" />
-                <StringBox v-else-if="token.type == TokenType.String" />
-                <BooleanBox v-else-if="token.type == TokenType.Boolean" :value="value.value" />
+            <div v-for="value in token.values">
+              <div v-if="value.isAlias"></div>
+              <div v-else class="value">
+                <VTooltip>
+                  <ColorBox
+                    v-if="token.type == TokenType.Color"
+                    :color="value.value"
+                  />
+                  <NumberBox
+                    v-else-if="token.type == TokenType.Number"
+                    :number="value.value"
+                  />
+                  <StringBox v-else-if="token.type == TokenType.String" />
+                  <BooleanBox
+                    v-else-if="token.type == TokenType.Boolean"
+                    :value="value.value"
+                  />
 
-                <template #popper>
-                  {{ value.modeName }}: {{ sanitizedValue(token.type, value.value) }}
-                </template>
-              </VTooltip>
+                  <template #popper>
+                    {{ value.modeName }}:
+                    {{ sanitizedValue(token.type, value.value) }}
+                  </template>
+                </VTooltip>
+              </div>
             </div>
           </div>
         </div>

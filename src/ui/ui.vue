@@ -1,52 +1,52 @@
 <script lang="ts" setup>
-import Navigation from './components/Navigation.vue';
-import Footer from './components/Footer.vue';
-import { useStore } from 'vuex';
+import Navigation from "./components/Navigation.vue";
+import Footer from "./components/Footer.vue";
+import { useStore } from "vuex";
+import ResizeIcon from "./components/ResizeIcon.vue";
 
 let store = useStore();
 
 window.onmessage = (e) => {
-  if (e.data.pluginMessage.type === 'updateState') {
-    console.log('updateState', e.data.pluginMessage.data);
-    store.commit('update', e.data.pluginMessage.data);
+  if (e.data.pluginMessage.type === "updateState") {
+    store.commit("update", e.data.pluginMessage.data);
   }
 };
-
 </script>
 
 <template>
   <Navigation />
   <main>
     <router-view></router-view>
-  </main>
 
+    <ResizeIcon class="corner-resize" />
+  </main>
 
   <Footer />
 </template>
 
 <style lang="scss">
-@import 'floating-vue/dist/style.css';
+@import "floating-vue/dist/style.css";
 
 .figma-light {
-  --colors-panel-bg: #FFFFFF;
-  --colors-panel-fg: #2C2C2C;
-  --colors-window-background: #FFFFFF;
+  --colors-panel-bg: #ffffff;
+  --colors-panel-fg: #2c2c2c;
+  --colors-window-background: #ffffff;
   --colors-primary-text: #000000;
-  --colors-muted-text: rgba(0, 0, 0, 0.30);
-  --colors-selected: rgba(0, 0, 0, 0.10);
+  --colors-muted-text: rgba(0, 0, 0, 0.3);
+  --colors-selected: rgba(0, 0, 0, 0.1);
   --colors-icon: #000000;
-  --colors-divider: #E5E5E5;
+  --colors-divider: #e5e5e5;
 }
 
 .figma-dark {
   color-scheme: dark;
   --colors-panel-bg: rgba(255, 255, 255, 0.1);
-  --colors-panel-fg: #FFFFFF;
-  --colors-window-background: #2C2C2C;
+  --colors-panel-fg: #ffffff;
+  --colors-window-background: #2c2c2c;
   --colors-primary-text: rgba(255, 255, 255, 1);
-  --colors-muted-text: rgba(255, 255, 255, .30);
-  --colors-selected: rgba(255, 255, 255, .10);
-  --colors-icon: #FFFFFF;
+  --colors-muted-text: rgba(255, 255, 255, 0.3);
+  --colors-selected: rgba(255, 255, 255, 0.1);
+  --colors-icon: #ffffff;
   --colors-divider: #444444;
 }
 
@@ -90,7 +90,6 @@ main {
   scroll-behavior: auto;
 }
 
-
 .regular {
   font-weight: 400;
 }
@@ -124,5 +123,12 @@ main {
   overflow-x: hidden;
   overflow-y: auto;
   scroll-behavior: auto;
+}
+
+.corner-resize {
+  position: absolute;
+  right: 1px;
+  bottom: 1px;
+  cursor: nwse-resize;
 }
 </style>

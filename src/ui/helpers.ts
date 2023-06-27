@@ -4,7 +4,7 @@ import { AppState, Collection, VariableValue } from "./models";
 export function jsonFromState(state: AppState): string {
     let output = new Array<Collection>();
     let variables = state.variables;
-    
+
     for (let variable of variables) {
         let collection = output.find(c => c.name == variable.collection);
 
@@ -23,6 +23,7 @@ export function jsonFromState(state: AppState): string {
             let tokenValue = {
                 name: variable.name,
                 type: variable.type,
+                isAlias: value.isAlias,
                 value: value.value,
             } as VariableValue;
 

@@ -30,20 +30,13 @@ function parseColor(value: any) {
   return value;
 }
 
-function parseValue(modeId: string, value: any) {
-
-  if (isVariableAlias(value)) {
-    let reference = figma.variables.getVariableById(value.id);
-    if (reference != undefined) {
-      value = reference.valuesByMode[modeId];
-    }
-  }
+function parseValue(value: any) {
 
   if (isRGBA(value) || isRGB(value)) {
     return parseColor(value);
   }
 
-  if(isGridStyle(value)) {
+  if (isGridStyle(value)) {
     return {
       layoutGrids: value.layoutGrids.map((grid) => {
         if (isRowsColsLayoutGrid(grid)) {
@@ -66,7 +59,7 @@ function parseValue(modeId: string, value: any) {
       }),
     }
   }
-  
+
   if (isTextStyle(value)) {
     return {
       fontSize: value.fontSize,
@@ -129,7 +122,6 @@ function isInnerShadowEffect(value: any): value is InnerShadowEffect {
   return (value as InnerShadowEffect).type === "INNER_SHADOW";
 }
 
-
 function processCollection(collection: VariableCollection): Array<VariableToken> {
   const variableIds = collection.variableIds;
   const modes = collection.modes;
@@ -167,7 +159,8 @@ function processCollection(collection: VariableCollection): Array<VariableToken>
 
         return {
           modeName: mode.name,
-          value: parseValue(mode.modeId, value),
+          isAlias: isVariableAlias(value),
+          value: parseValue(value),
         } as ModeValue;
       }),
     }
@@ -186,6 +179,25 @@ export function getVariables(): Array<VariableToken> {
     variables.push(...processCollection(collection));
   });
 
+  variables.forEach((variable) => {
+    variable.values.forEach((modeValue) => {
+      if (modeValue.isAlias) {
+        const alias = modeValue.value as VariableAlias;
+
+        let reference = figma.variables.getVariableById(alias.id) as Variable;
+        if (reference != undefined && reference != null) {
+          let collectionsName = collections.find(c => c.id == reference.variableCollectionId)?.name;
+
+          modeValue.value = {
+            collection: collectionsName,
+            name: reference.name,
+          };
+        }
+      }
+    });
+  });
+
+
   const textStyles = figma.getLocalTextStyles();
   textStyles.forEach((style) => {
     variables.push({
@@ -194,7 +206,8 @@ export function getVariables(): Array<VariableToken> {
       type: TokenType.Typography,
       values: [{
         modeName: "Style",
-        value: parseValue("Style", style)
+        isAlias: false,
+        value: parseValue(style)
       }],
     });
   });
@@ -207,12 +220,13 @@ export function getVariables(): Array<VariableToken> {
       type: TokenType.Effect,
       values: [{
         modeName: "Style",
-        value: parseValue("Style", style),
+        isAlias: false,
+        value: parseValue(style),
       }],
     });
   });
 
-  const gridStyles  = figma.getLocalGridStyles();
+  const gridStyles = figma.getLocalGridStyles();
   gridStyles.forEach((style) => {
     variables.push({
       collection: "Grids",
@@ -220,7 +234,8 @@ export function getVariables(): Array<VariableToken> {
       type: TokenType.Grid,
       values: [{
         modeName: "Style",
-        value: parseValue("Style", style),
+        isAlias: false,
+        value: parseValue(style),
       }],
     });
   });
