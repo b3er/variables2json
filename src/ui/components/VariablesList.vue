@@ -149,7 +149,6 @@ defineExpose({
 </script>
 
 <template>
-  <div class="page">
     <div class="scroll-view">
       <VariableListPanel
         v-for="[type, tokens] in list"
@@ -192,14 +191,9 @@ defineExpose({
         </div>
       </VariableListPanel>
     </div>
-  </div>
 </template>
 
 <style scoped>
-.page {
-  overflow-y: hidden;
-  height: 92%;
-}
 
 .row {
   display: flex;
