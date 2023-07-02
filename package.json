@@ -9,14 +9,14 @@
     "start:code": "vite build --watch --config vite-code.config.js",
     "build": "vite build --config vite-ui.config.js && vite build --config vite-code.config.js",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
-    "format": "prettier ./src  --write"
+    "format": "prettier ./src  --write",
+    "analyze": "npm run lint && npm run format && vite build --config vite-ui.config.js --mode analyze && vite build --config vite-code.config.js --mode analyze"
   },
   "author": "Mark Mooibroek",
   "license": "ISC",
   "dependencies": {
     "@figma/plugin-typings": "^1.40.0",
     "figma-plugin-ds": "^1.0.1",
-    "floating-vue": "^2.0.0-beta.22",
     "prettier": "^2.8.8",
     "vue": "^3.2.26",
     "vue-router": "^4.2.2",
