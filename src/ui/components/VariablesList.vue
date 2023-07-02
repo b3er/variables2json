@@ -152,17 +152,25 @@ defineExpose({
   <div class="scroll-view">
     <VariableListPanel
       v-for="[type, tokens] in list"
+      :key="type"
       :collapsed="isCollapsed(type)"
       :name="rowName(type)"
       :on-click="() => toggle(type)"
       :item-count="tokens.length"
     >
-      <div v-for="token in tokens" class="token-row row regular bb">
+      <div
+        v-for="token in tokens"
+        :key="token.name"
+        class="token-row row regular bb"
+      >
         <span class="collection">{{ token.collection }}</span>
         <span class="name">{{ token.name }}</span>
 
         <div class="values">
-          <div v-for="value in token.values">
+          <div
+            v-for="value in token.values"
+            :key="value.value + '-' + token.name"
+          >
             <div v-if="value.isAlias"></div>
             <div v-else class="value">
               <VTooltip>

@@ -16,7 +16,7 @@ function resizeWindow(e) {
 
   const options = {
     w: Math.floor(Math.max(minWidth, Math.min(maxWidth, e.clientX))),
-    h: Math.floor(Math.max(minHeight, Math.min(maxHeight, e.clientY)))
+    h: Math.floor(Math.max(minHeight, Math.min(maxHeight, e.clientY))),
   } as ResizeOptions;
 
   parent.postMessage({ pluginMessage: { type: "resize", data: options } }, "*");
