@@ -1,18 +1,17 @@
 <script lang="ts" setup>
-import { IconType } from '../models';
-import Icon from './Icon.vue';
+import { IconType } from "@/models";
+import Icon from "@/components/Icon.vue";
 
 defineProps<{
-    value: boolean;
+  value: boolean;
 }>();
-
 </script>
 
 <template>
-    <div class="panel">
-        <Icon :type="IconType.Check" v-if="value" />
-        <Icon :type="IconType.Uncheck" v-if="!value" />
-    </div>
+  <div class="panel">
+    <Icon v-if="value" :type="IconType.Check" />
+    <Icon v-if="!value" :type="IconType.Uncheck" />
+  </div>
 </template>
 
 <style scoped></style>

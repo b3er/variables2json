@@ -1,4 +1,3 @@
-
 export enum IconType {
   Expand = `expand`,
   Collapse = `collapse`,
@@ -33,15 +32,14 @@ export interface ModeValue {
 export interface VariableToken {
   collection: string;
   name: string;
-  type: TokenType,
+  type: TokenType;
   values: Array<ModeValue>;
 }
 
 export interface VariableGroup {
-  type: TokenType,
+  type: TokenType;
   tokens: Array<VariableToken> | undefined;
 }
-
 
 export interface AppState {
   version: string;
@@ -51,7 +49,7 @@ export interface AppState {
 
 export interface VariableValue {
   name: string;
-  type: TokenType
+  type: TokenType;
   value: any;
 }
 

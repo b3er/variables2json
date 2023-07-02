@@ -1,4 +1,3 @@
-
 import { AppState, ResizeOptions } from "../ui/models";
 import { getVariables } from "./modules/variables";
 
@@ -12,15 +11,15 @@ function getState(): AppState {
   } as AppState;
 }
 
-figma.ui.postMessage({ type: 'updateState', data: getState() });
+figma.ui.postMessage({ type: "updateState", data: getState() });
 
 figma.on("documentchange", () => {
-  figma.ui.postMessage({ type: 'updateState', data: getState() });
+  figma.ui.postMessage({ type: "updateState", data: getState() });
 });
 
 figma.ui.onmessage = (msg) => {
   if (msg === "notify-downloaded") {
-    figma.notify('Variables downloaded!');
+    figma.notify("Variables downloaded!");
   }
 
   if (msg.type === "resize") {
@@ -29,13 +28,15 @@ figma.ui.onmessage = (msg) => {
 };
 
 // restore previous size
-figma.clientStorage.getAsync('size').then(options => {
-  console.log(options);
-  if (options) _reposition(options as ResizeOptions);
-}).catch(err => { });
-
+figma.clientStorage
+  .getAsync("size")
+  .then((options) => {
+    console.log(options);
+    if (options) _reposition(options as ResizeOptions);
+  })
+  .catch((err) => {});
 
 function _reposition(options: ResizeOptions) {
   figma.ui.resize(options.w, options.h);
-  figma.clientStorage.setAsync('size', options).catch(err => { });
+  figma.clientStorage.setAsync("size", options).catch((err) => {});
 }

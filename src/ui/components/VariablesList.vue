@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import VariableListPanel from "./VariableListPanel.vue";
-import { VariableGroup, TokenType, AppState, VariableToken } from "../models";
 import { computed, ref } from "vue";
-import ColorBox from "./ColorBox.vue";
 import { useStore } from "vuex";
 import { Store } from "vuex/types/index.js";
-import NumberBox from "./NumberBox.vue";
-import StringBox from "./StringBox.vue";
-import BooleanBox from "./BooleanBox.vue";
+import VariableListPanel from "@/components/VariableListPanel.vue";
+import ColorBox from "@/components/ColorBox.vue";
+import NumberBox from "@/components/NumberBox.vue";
+import StringBox from "@/components/StringBox.vue";
+import BooleanBox from "@/components/BooleanBox.vue";
+import { TokenType, AppState, VariableToken } from "@/models";
 
 let store = useStore() as Store<AppState>;
 
@@ -149,52 +149,51 @@ defineExpose({
 </script>
 
 <template>
-    <div class="scroll-view">
-      <VariableListPanel
-        v-for="[type, tokens] in list"
-        :collapsed="isCollapsed(type)"
-        :name="rowName(type)"
-        :on-click="() => toggle(type)"
-        :item-count="tokens.length"
-      >
-        <div v-for="token in tokens" class="token-row row regular bb">
-          <span class="collection">{{ token.collection }}</span>
-          <span class="name">{{ token.name }}</span>
+  <div class="scroll-view">
+    <VariableListPanel
+      v-for="[type, tokens] in list"
+      :collapsed="isCollapsed(type)"
+      :name="rowName(type)"
+      :on-click="() => toggle(type)"
+      :item-count="tokens.length"
+    >
+      <div v-for="token in tokens" class="token-row row regular bb">
+        <span class="collection">{{ token.collection }}</span>
+        <span class="name">{{ token.name }}</span>
 
-          <div class="values">
-            <div v-for="value in token.values">
-              <div v-if="value.isAlias"></div>
-              <div v-else class="value">
-                <VTooltip>
-                  <ColorBox
-                    v-if="token.type == TokenType.Color"
-                    :color="value.value"
-                  />
-                  <NumberBox
-                    v-else-if="token.type == TokenType.Number"
-                    :number="value.value"
-                  />
-                  <StringBox v-else-if="token.type == TokenType.String" />
-                  <BooleanBox
-                    v-else-if="token.type == TokenType.Boolean"
-                    :value="value.value"
-                  />
+        <div class="values">
+          <div v-for="value in token.values">
+            <div v-if="value.isAlias"></div>
+            <div v-else class="value">
+              <VTooltip>
+                <ColorBox
+                  v-if="token.type == TokenType.Color"
+                  :color="value.value"
+                />
+                <NumberBox
+                  v-else-if="token.type == TokenType.Number"
+                  :number="value.value"
+                />
+                <StringBox v-else-if="token.type == TokenType.String" />
+                <BooleanBox
+                  v-else-if="token.type == TokenType.Boolean"
+                  :value="value.value"
+                />
 
-                  <template #popper>
-                    {{ value.modeName }}:
-                    {{ sanitizedValue(token.type, value.value) }}
-                  </template>
-                </VTooltip>
-              </div>
+                <template #popper>
+                  {{ value.modeName }}:
+                  {{ sanitizedValue(token.type, value.value) }}
+                </template>
+              </VTooltip>
             </div>
           </div>
         </div>
-      </VariableListPanel>
-    </div>
+      </div>
+    </VariableListPanel>
+  </div>
 </template>
 
 <style scoped>
-
 .row {
   display: flex;
   align-items: center;

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { IconType } from "../models";
+import { IconType } from "@/models";
 
 let props = defineProps<{
   type: IconType;
@@ -9,7 +9,7 @@ let props = defineProps<{
 </script>
 
 <template>
-  <div class="plugin-icon" :class="[{ 'muted': muted }, { 'dark': dark }]">
+  <div class="plugin-icon" :class="[{ muted: muted }, { dark: dark }]">
     <svg
       v-if="props.type == IconType.Expand"
       width="24"

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import Icon from "../components/Icon.vue";
-import VariablesList from "../components/VariablesList.vue";
-import VariablesJson from "../components/VariablesJson.vue";
-import { IconType } from "../models";
+import Icon from "@/components/Icon.vue";
+import VariablesList from "@/components/VariablesList.vue";
+import VariablesJson from "@/components/VariablesJson.vue";
+import { IconType } from "@/models";
 import { useRoute } from "vue-router";
 import { ref } from "vue";
 
@@ -23,14 +23,14 @@ function collapse() {
     <div class="toolbar bb">
       <div class="icons">
         <Icon
+          v-if="route.params.type == 'list'"
           :type="IconType.Expand"
           @click="expand"
-          v-if="route.params.type == 'list'"
         />
         <Icon
+          v-if="route.params.type == 'list'"
           :type="IconType.Collapse"
           @click="collapse"
-          v-if="route.params.type == 'list'"
         />
       </div>
 

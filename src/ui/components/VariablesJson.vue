@@ -1,13 +1,12 @@
 <script lang="ts" setup>
 import { useStore } from "vuex";
-import { AppState, TokenType, VariableToken } from "../models";
 import { Store } from "vuex/types/index.js";
 import { computed } from "vue";
-import { jsonFromState } from "../helpers";
+import { AppState } from "@/models";
+import { jsonFromState } from "@/helpers";
 
 let store = useStore() as Store<AppState>;
 let json = computed<string>(() => jsonFromState(store.state));
-
 </script>
 
 <template>

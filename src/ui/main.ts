@@ -24,7 +24,7 @@ const store = createStore({
       version: "0.0.1",
       loaded: false,
       variables: [],
-    } as AppState
+    } as AppState;
   },
   mutations: {
     update(state: AppState, data: AppState) {
@@ -32,11 +32,7 @@ const store = createStore({
       state.loaded = data.loaded;
       state.variables = data.variables;
     },
-  }
-})
+  },
+});
 
-createApp(ui)
-  .use(store)
-  .use(router)
-  .use(FloatingVue)
-  .mount("#ui");
+createApp(ui).use(store).use(router).use(FloatingVue).mount("#ui");

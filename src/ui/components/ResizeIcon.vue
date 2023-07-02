@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { computed, ref } from "vue";
-import { IconType, ResizeOptions } from "../models";
-import Icon from "./Icon.vue";
+import { ref } from "vue";
+import { IconType, ResizeOptions } from "@/models";
+import Icon from "@/components/Icon.vue";
 
 const capturing = ref(false);
 
@@ -16,7 +16,7 @@ function resizeWindow(e) {
 
   const options = {
     w: Math.floor(Math.max(minWidth, Math.min(maxWidth, e.clientX))),
-    h: Math.floor(Math.max(minHeight, Math.min(maxHeight, e.clientY))),
+    h: Math.floor(Math.max(minHeight, Math.min(maxHeight, e.clientY)))
   } as ResizeOptions;
 
   parent.postMessage({ pluginMessage: { type: "resize", data: options } }, "*");
@@ -42,9 +42,9 @@ function onPointerUp(e: PointerEvent) {
     :type="IconType.CornerResize"
     :dark="true"
     class="corner-resize"
-    v-on:pointerdown="onPointerDown"
-    v-on:pointermove="resizeWindow"
-    v-on:pointerup="onPointerUp"
+    @pointerdown="onPointerDown"
+    @pointermove="resizeWindow"
+    @pointerup="onPointerUp"
   />
 </template>
 

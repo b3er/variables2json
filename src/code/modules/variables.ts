@@ -31,7 +31,6 @@ function parseColor(value: any) {
 }
 
 function parseValue(value: any) {
-
   if (isRGBA(value) || isRGB(value)) {
     return parseColor(value);
   }
@@ -57,7 +56,7 @@ function parseValue(value: any) {
           };
         }
       }),
-    }
+    };
   }
 
   if (isTextStyle(value)) {
@@ -65,13 +64,14 @@ function parseValue(value: any) {
       fontSize: value.fontSize,
       fontFamily: value.fontName.family,
       fontWeight: value.fontName.style,
-      lineHeight: value.lineHeight.unit == "AUTO" ? 'auto' : value.lineHeight.value,
+      lineHeight:
+        value.lineHeight.unit == "AUTO" ? "auto" : value.lineHeight.value,
       lineHeightUnit: value.lineHeight.unit,
       letterSpacing: value.letterSpacing.value,
       letterSpacingUnit: value.letterSpacing.unit,
       textCase: value.textCase,
       textDecoration: value.textDecoration,
-    }
+    };
   }
 
   if (isEffectStyle(value)) {
@@ -92,7 +92,7 @@ function parseValue(value: any) {
           };
         }
       }),
-    }
+    };
   }
 
   return value;
@@ -111,7 +111,10 @@ function isGridStyle(value: any): value is GridStyle {
 }
 
 function isRowsColsLayoutGrid(value: LayoutGrid): value is RowsColsLayoutGrid {
-  return (value as RowsColsLayoutGrid).pattern === "ROWS" || (value as RowsColsLayoutGrid).pattern === "COLUMNS";
+  return (
+    (value as RowsColsLayoutGrid).pattern === "ROWS" ||
+    (value as RowsColsLayoutGrid).pattern === "COLUMNS"
+  );
 }
 
 function isDropShadowEffect(value: any): value is DropShadowEffect {
@@ -122,15 +125,17 @@ function isInnerShadowEffect(value: any): value is InnerShadowEffect {
   return (value as InnerShadowEffect).type === "INNER_SHADOW";
 }
 
-function processCollection(collection: VariableCollection): Array<VariableToken> {
+function processCollection(
+  collection: VariableCollection
+): Array<VariableToken> {
   const variableIds = collection.variableIds;
   const modes = collection.modes;
 
   let tokens = [] as Array<VariableToken>;
 
   variableIds.forEach((variableId) => {
-
-    const variable: Variable | null = figma.variables.getVariableById(variableId);
+    const variable: Variable | null =
+      figma.variables.getVariableById(variableId);
 
     if (!variable) return;
 
@@ -163,7 +168,7 @@ function processCollection(collection: VariableCollection): Array<VariableToken>
           value: parseValue(value),
         } as ModeValue;
       }),
-    }
+    };
 
     tokens.push(token);
   });
@@ -186,7 +191,9 @@ export function getVariables(): Array<VariableToken> {
 
         let reference = figma.variables.getVariableById(alias.id) as Variable;
         if (reference != undefined && reference != null) {
-          let collectionsName = collections.find(c => c.id == reference.variableCollectionId)?.name;
+          let collectionsName = collections.find(
+            (c) => c.id == reference.variableCollectionId
+          )?.name;
 
           modeValue.value = {
             collection: collectionsName,
@@ -197,18 +204,19 @@ export function getVariables(): Array<VariableToken> {
     });
   });
 
-
   const textStyles = figma.getLocalTextStyles();
   textStyles.forEach((style) => {
     variables.push({
       collection: "Typography",
       name: style.name,
       type: TokenType.Typography,
-      values: [{
-        modeName: "Style",
-        isAlias: false,
-        value: parseValue(style)
-      }],
+      values: [
+        {
+          modeName: "Style",
+          isAlias: false,
+          value: parseValue(style),
+        },
+      ],
     });
   });
 
@@ -218,11 +226,13 @@ export function getVariables(): Array<VariableToken> {
       collection: "Effects",
       name: style.name,
       type: TokenType.Effect,
-      values: [{
-        modeName: "Style",
-        isAlias: false,
-        value: parseValue(style),
-      }],
+      values: [
+        {
+          modeName: "Style",
+          isAlias: false,
+          value: parseValue(style),
+        },
+      ],
     });
   });
 
@@ -232,11 +242,13 @@ export function getVariables(): Array<VariableToken> {
       collection: "Grids",
       name: style.name,
       type: TokenType.Grid,
-      values: [{
-        modeName: "Style",
-        isAlias: false,
-        value: parseValue(style),
-      }],
+      values: [
+        {
+          modeName: "Style",
+          isAlias: false,
+          value: parseValue(style),
+        },
+      ],
     });
   });
 

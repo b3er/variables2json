@@ -1,14 +1,13 @@
-<script lang="ts" setup>
-
-</script>
+<script lang="ts" setup></script>
 
 <template>
   <div class="centered">
     <h2>Coming soon</h2>
 
-    <p>By utilizing composites, you gain the ability to assign types to frames, resulting in the generation
-      of
-      exceptionally potent JSON output!</p>
+    <p>
+      By utilizing composites, you gain the ability to assign types to frames,
+      resulting in the generation of exceptionally potent JSON output!
+    </p>
   </div>
 </template>
 
