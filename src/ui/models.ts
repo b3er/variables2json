@@ -35,11 +35,35 @@ export interface ModeValue {
   value: any;
 }
 
-export interface VariableToken {
-  collection: string;
-  name: string;
-  type: TokenType;
-  values: Array<ModeValue>;
+export class VariableToken {
+  static fromObject(variableProxy: any): VariableToken {
+    return new VariableToken(
+      variableProxy.collection,
+      variableProxy.name,
+      variableProxy.type,
+      variableProxy.values
+    );
+  }
+
+  constructor(
+    public collection: string,
+    public name: string,
+    public type: TokenType,
+    public values: Array<ModeValue>
+  ) {
+    this.collection = collection;
+    this.name = name;
+    this.type = type;
+    this.values = values;
+  }
+
+  isPrivate(): boolean {
+    // Make array of values to check
+    let values = [...this.name.split("/"), this.collection];
+
+    // return true if any value starts with an underscore
+    return values.some((value) => value.startsWith("_"));
+  }
 }
 
 export interface VariableGroup {

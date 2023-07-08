@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "lib": ["es6", "dom", "es2016"],
+    "lib": [
+      "es6",
+      "dom",
+      "es2017"
+    ],
     "strict": true,
     "moduleResolution": "bundler",
     "noImplicitAny": false,
@@ -12,9 +16,9 @@
     ],
     "paths": {
       "@/*": [
-       "./src/ui/*"
+        "./src/ui/*"
       ]
-     }
+    }
   },
   "include": [
     "src/**/*.ts",

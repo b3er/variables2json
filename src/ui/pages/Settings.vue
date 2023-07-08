@@ -11,12 +11,12 @@ let store = useStore() as Store<AppState>;
 
 let excludePrivate = computed({
   get: () => store.state.settings.excludePrivate,
-  set: (checked) => store.commit("settingsTogglePrivate", checked)
+  set: (checked) => store.commit("settingsTogglePrivate", checked),
 });
 
 let colorFormat = computed({
   get: () => store.state.settings.colorFormat,
-  set: (format) => store.commit("settingsSetColorFormat", format)
+  set: (format) => store.commit("settingsSetColorFormat", format),
 });
 </script>
 
@@ -27,13 +27,16 @@ let colorFormat = computed({
 
       <div class="row regular">
         <label>Don't export private name (leading underscore)</label>
-        <input v-model="excludePrivate" type="checkbox" />
+        <div class="value">
+          <input v-model="excludePrivate" type="checkbox" />
+        </div>
       </div>
 
       <div class="row regular">
         <label>Color format</label>
-
-        <DropDown v-model="colorFormat" :options="['hex', 'rgba']" />
+        <div class="value">
+          <DropDown v-model="colorFormat" :options="['hex', 'rgba']" />
+        </div>
       </div>
     </div>
   </div>
@@ -55,5 +58,11 @@ input[type="checkbox"] {
   justify-content: space-between;
   align-items: center;
   padding: 0 8px;
+}
+
+.value {
+  min-width: 100px;
+  display: flex;
+  justify-content: flex-end;
 }
 </style>

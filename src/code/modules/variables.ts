@@ -155,11 +155,11 @@ function processCollection(
         break;
     }
 
-    let token = {
-      collection: collection.name,
-      name: variable.name,
-      type: type,
-      values: modes.map((mode) => {
+    let token = new VariableToken(
+      collection.name,
+      variable.name,
+      type,
+      modes.map((mode) => {
         let value = variable.valuesByMode[mode.modeId];
 
         return {
@@ -167,8 +167,8 @@ function processCollection(
           isAlias: isVariableAlias(value),
           value: parseValue(value),
         } as ModeValue;
-      }),
-    };
+      })
+    );
 
     tokens.push(token);
   });
@@ -206,50 +206,41 @@ export function getVariables(): Array<VariableToken> {
 
   const textStyles = figma.getLocalTextStyles();
   textStyles.forEach((style) => {
-    variables.push({
-      collection: "Typography",
-      name: style.name,
-      type: TokenType.Typography,
-      values: [
+    variables.push(
+      new VariableToken("Typography", style.name, TokenType.Typography, [
         {
           modeName: "Style",
           isAlias: false,
           value: parseValue(style),
         },
-      ],
-    });
+      ])
+    );
   });
 
   const effectStyles = figma.getLocalEffectStyles();
   effectStyles.forEach((style) => {
-    variables.push({
-      collection: "Effects",
-      name: style.name,
-      type: TokenType.Effect,
-      values: [
+    variables.push(
+      new VariableToken("Effects", style.name, TokenType.Effect, [
         {
           modeName: "Style",
           isAlias: false,
           value: parseValue(style),
         },
-      ],
-    });
+      ])
+    );
   });
 
   const gridStyles = figma.getLocalGridStyles();
   gridStyles.forEach((style) => {
-    variables.push({
-      collection: "Grids",
-      name: style.name,
-      type: TokenType.Grid,
-      values: [
+    variables.push(
+      new VariableToken("Grids", style.name, TokenType.Grid, [
         {
           modeName: "Style",
           isAlias: false,
           value: parseValue(style),
         },
-      ],
-    });
+      ])
+    );
   });
 
   return variables;
