@@ -175,6 +175,23 @@ let props = defineProps<{
         d="M4.33431 10.6746L10.6746 4.33432V6.86724L6.86723 10.6746H4.33431Z"
       />
     </svg>
+
+    <svg
+      v-if="props.type == IconType.ArrowDown"
+      width="8"
+      height="5"
+      viewBox="0 0 8 5"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M3.64648 3.85359L0.646484 0.853591L1.35359 0.146484L4.00004 2.79293L6.64648 0.146484L7.35359 0.853591L4.35359 3.85359L4.00004 4.20714L3.64648 3.85359Z"
+        fill="white"
+        fill-opacity="0.3"
+      />
+    </svg>
   </div>
 </template>
 

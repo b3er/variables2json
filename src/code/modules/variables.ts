@@ -20,9 +20,9 @@ function parseColor(value: any) {
     }
 
     value = {
-      r: Math.floor(value.r * 255),
-      g: Math.floor(value.g * 255),
-      b: Math.floor(value.b * 255),
+      r: Math.round(value.r * 255),
+      g: Math.round(value.g * 255),
+      b: Math.round(value.b * 255),
       a: a,
     };
   }

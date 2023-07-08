@@ -23,4 +23,9 @@ let json = computed<string>(() => jsonFromState(store.state));
 
   padding: 0 1em;
 }
+
+pre {
+  font-size: 1.2em;
+  line-height: 1.5em;
+}
 </style>

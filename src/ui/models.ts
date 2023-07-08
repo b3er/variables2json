@@ -11,6 +11,7 @@ export enum IconType {
   Download = `download`,
   Github = `github`,
   CornerResize = `corner-resize`,
+  ArrowDown = `arrow-down`,
 }
 
 export enum TokenType {
@@ -21,6 +22,11 @@ export enum TokenType {
   Typography = `typography`,
   Effect = `effect`,
   Grid = `grid`,
+}
+
+export enum ColorFormatType {
+  Hex = `hex`,
+  Rgba = `rgba`,
 }
 
 export interface ModeValue {
@@ -45,6 +51,7 @@ export interface AppState {
   version: string;
   loaded: boolean;
   variables: Array<VariableToken>;
+  settings: SettingsData;
 }
 
 export interface VariableValue {
@@ -66,4 +73,9 @@ export interface Collection {
 export interface ResizeOptions {
   w: number;
   h: number;
+}
+
+export interface SettingsData {
+  excludePrivate: boolean;
+  colorFormat: ColorFormatType;
 }

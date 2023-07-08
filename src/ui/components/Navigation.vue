@@ -13,6 +13,8 @@ const route = useRoute();
       >Variables</router-link
     >
     <router-link class="item" to="/composites">Composites</router-link>
+
+    <router-link class="item" to="/settings">Settings</router-link>
   </div>
   <Divider />
 </template>

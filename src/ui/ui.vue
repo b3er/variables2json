@@ -1,16 +1,38 @@
 <script lang="ts" setup>
 import Navigation from "./components/Navigation.vue";
 import Footer from "./components/Footer.vue";
-import { useStore } from "vuex";
+import { useStore, Store } from "vuex";
 import ResizeIcon from "./components/ResizeIcon.vue";
+import { AppState, SettingsData } from "./models";
 
-let store = useStore();
+let store = useStore() as Store<AppState>;
 
 window.onmessage = (e) => {
   if (e.data.pluginMessage.type === "updateState") {
+    console.log("updateState", e.data.pluginMessage.data);
     store.commit("update", e.data.pluginMessage.data);
   }
 };
+
+// Send message to plugin when settings change
+store.watch(
+  (state) => state.settings,
+  (proxy) => {
+    console.log("Updated settings => post to backend");
+    let settings = structuredClone({ ...proxy }) as SettingsData;
+
+    console.log();
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: "updateSettings",
+          data: settings,
+        },
+      },
+      "*"
+    );
+  }
+);
 </script>
 
 <template>
@@ -28,6 +50,7 @@ window.onmessage = (e) => {
 @import "floating-vue/dist/style.css";
 
 .figma-light {
+  --colors-active: #18a0fb;
   --colors-panel-bg: #ffffff;
   --colors-panel-fg: #2c2c2c;
   --colors-window-background: #ffffff;
@@ -40,6 +63,7 @@ window.onmessage = (e) => {
 
 .figma-dark {
   color-scheme: dark;
+  --colors-active: #18a0fb;
   --colors-panel-bg: rgba(255, 255, 255, 0.1);
   --colors-panel-fg: #ffffff;
   --colors-window-background: #2c2c2c;
@@ -88,6 +112,14 @@ main {
   flex: auto;
   overflow-y: auto;
   scroll-behavior: auto;
+}
+
+.title {
+  display: block;
+  font-size: 1.2em;
+  line-height: 16px;
+  font-weight: 600;
+  padding: 8px 0;
 }
 
 .regular {
