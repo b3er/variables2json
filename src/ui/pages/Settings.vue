@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useStore, Store } from "vuex";
 import DropDown from "@/components/DropDown.vue";
+import SyncSettingsList from "@/components/SyncSettingsList.vue";
 import { computed } from "vue";
 import { AppState } from "@/models";
 
@@ -19,6 +20,7 @@ let colorFormat = computed({
 
 <template>
   <div class="page">
+    <!-- Export settings -->
     <div class="section">
       <span class="title">Export settings</span>
 
@@ -36,10 +38,21 @@ let colorFormat = computed({
         </div>
       </div>
     </div>
+
+    <!-- Sync settings -->
+    <div class="section">
+      <span class="title">Sync settings</span>
+
+      <SyncSettingsList />
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
+.section {
+  padding-top: 4px;
+}
+
 input[type="checkbox"] {
   accent-color: var(--colors-active);
 }
