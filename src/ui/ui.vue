@@ -1,10 +1,9 @@
 <script lang="ts" setup>
 import Navigation from "@/components/Navigation.vue";
 import Footer from "@/components/Footer.vue";
-
 import ResizeIcon from "@/components/ResizeIcon.vue";
-import { SettingsData } from "@/models";
 import { useStore } from "@/store";
+import { SettingsData } from "@/models";
 
 let store = useStore();
 

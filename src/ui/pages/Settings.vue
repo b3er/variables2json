@@ -1,20 +1,21 @@
 <script lang="ts" setup>
-import { useStore, Store } from "vuex";
+import { computed } from "vue";
+import { useStore } from "@/store";
+import { IconType } from "@/models";
 import DropDown from "@/components/DropDown.vue";
 import SyncSettingsList from "@/components/SyncSettingsList.vue";
-import { computed } from "vue";
-import { AppState } from "@/models";
+import Icon from "@/components/Icon.vue";
 
-let store = useStore() as Store<AppState>;
+let store = useStore();
 
 let excludePrivate = computed({
   get: () => store.state.settings.excludePrivate,
-  set: (checked) => store.commit("settingsTogglePrivate", checked)
+  set: (checked) => store.commit("settingsTogglePrivate", checked),
 });
 
 let colorFormat = computed({
   get: () => store.state.settings.colorFormat,
-  set: (format) => store.commit("settingsSetColorFormat", format)
+  set: (format) => store.commit("settingsSetColorFormat", format),
 });
 </script>
 
@@ -41,7 +42,10 @@ let colorFormat = computed({
 
     <!-- Sync settings -->
     <div class="section">
-      <span class="title">Sync settings</span>
+      <div class="header">
+        <span class="title">Server sync</span>
+        <Icon :type="IconType.Add" />
+      </div>
 
       <SyncSettingsList />
     </div>
@@ -55,6 +59,12 @@ let colorFormat = computed({
 
 input[type="checkbox"] {
   accent-color: var(--colors-active);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .title {

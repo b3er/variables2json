@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import { computed, ref } from "vue";
-import { useStore, Store } from "vuex";
+import { useStore } from "@/store";
 import VariableListPanel from "@/components/VariableListPanel.vue";
 import ColorBox from "@/components/ColorBox.vue";
 import NumberBox from "@/components/NumberBox.vue";
 import StringBox from "@/components/StringBox.vue";
 import BooleanBox from "@/components/BooleanBox.vue";
-import { TokenType, AppState, VariableToken } from "@/models";
+import { TokenType, VariableToken } from "@/models";
 
-let store = useStore() as Store<AppState>;
+let store = useStore();
 
 function sanitizedValue(type: TokenType, value: any) {
   if (type == TokenType.Color) {
@@ -35,51 +35,51 @@ let rowStates = ref<Map<TokenType, RowState>>(
       TokenType.Color,
       {
         collapsed: true,
-        name: "Colors"
-      }
+        name: "Colors",
+      },
     ],
     [
       TokenType.Number,
       {
         collapsed: true,
-        name: "Numbers"
-      }
+        name: "Numbers",
+      },
     ],
     [
       TokenType.String,
       {
         collapsed: true,
-        name: "Strings"
-      }
+        name: "Strings",
+      },
     ],
     [
       TokenType.Boolean,
       {
         collapsed: true,
-        name: "Booleans"
-      }
+        name: "Booleans",
+      },
     ],
     [
       TokenType.Typography,
       {
         collapsed: true,
-        name: "Typography"
-      }
+        name: "Typography",
+      },
     ],
     [
       TokenType.Effect,
       {
         collapsed: true,
-        name: "Effects"
-      }
+        name: "Effects",
+      },
     ],
     [
       TokenType.Grid,
       {
         collapsed: true,
-        name: "Grids"
-      }
-    ]
+        name: "Grids",
+      },
+    ],
   ])
 );
 
@@ -114,7 +114,7 @@ function toggle(type: TokenType) {
 function updateRow(type: TokenType, collapsed: boolean) {
   rowStates.value.set(type, {
     ...rowStates.value.get(type)!,
-    collapsed: collapsed
+    collapsed: collapsed,
   });
 }
 
@@ -143,7 +143,7 @@ function rowName(type: TokenType): string {
 
 defineExpose({
   expandAll,
-  collapseAll
+  collapseAll,
 });
 </script>
 

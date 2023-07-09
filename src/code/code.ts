@@ -1,17 +1,19 @@
-import { AppState, ResizeOptions, SettingsData } from "../ui/models";
+import { AppState, ResizeOptions, Server, SettingsData } from "../ui/models";
 import { getVariables } from "./modules/variables";
 
 figma.showUI(__html__, { themeColors: true, width: 320, height: 500 });
 
 async function getStateAsync(): Promise<AppState> {
   let settings = await loadSettingsAsync();
+  let servers = await loadServersAsync();
   let variables = getVariables();
 
   return {
     version: "1.0.5",
     loaded: true,
     variables: variables,
-    settings: settings
+    settings: settings,
+    servers: servers,
   } as AppState;
 }
 
@@ -23,8 +25,18 @@ async function loadSettingsAsync(): Promise<SettingsData> {
   } else {
     return {
       excludePrivate: false,
-      colorFormat: "hex"
+      colorFormat: "hex",
     } as SettingsData;
+  }
+}
+
+async function loadServersAsync(): Promise<Array<Server>> {
+  let serversOrNull = await figma.clientStorage.getAsync("servers");
+
+  if (serversOrNull) {
+    return serversOrNull as Array<Server>;
+  } else {
+    return [];
   }
 }
 

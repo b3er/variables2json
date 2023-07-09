@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { computed } from "vue";
-import { useStore, Store } from "vuex";
-import { AppState, IconType } from "@/models";
+import { useStore } from "@/store";
+import { IconType } from "@/models";
 import { jsonFromState } from "@/helpers";
 import Icon from "@/components/Icon.vue";
 
-let store = useStore() as Store<AppState>;
+let store = useStore();
 
 let version = computed<string>(() => store.state.version);
 

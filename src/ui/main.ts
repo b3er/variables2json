@@ -5,20 +5,20 @@ import Composites from "@/pages/Composites.vue";
 import Settings from "@/pages/Settings.vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 import FloatingVue from "floating-vue";
-import { pluginStore } from "./store";
+import { key, pluginStore } from "./store";
 
 const routes = [
   { path: "/", redirect: "/variables/list" },
   { path: "/variables/:type", component: Variables, name: "variables" },
   { path: "/composites", component: Composites },
-  { path: "/settings", component: Settings }
+  { path: "/settings", component: Settings },
 ];
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
+  routes,
 });
 
 const store = pluginStore();
 
-createApp(ui).use(store).use(router).use(FloatingVue).mount("#ui");
+createApp(ui).use(store, key).use(router).use(FloatingVue).mount("#ui");

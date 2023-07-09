@@ -1,5 +1,13 @@
-import { createStore, Store } from "vuex";
+import { createStore, useStore as baseUseStore } from "vuex";
+import { Store } from "vuex/types/index.js";
 import { SettingsData, AppState, ColorFormatType } from "./models";
+import { InjectionKey } from "vue";
+
+export const key: InjectionKey<Store<AppState>> = Symbol();
+
+export function useStore(): Store<AppState> {
+  return baseUseStore(key) as Store<AppState>;
+}
 
 export function pluginStore(): Store<AppState> {
   return createStore({
@@ -12,6 +20,7 @@ export function pluginStore(): Store<AppState> {
           excludePrivate: false,
           colorFormat: "hex",
         } as SettingsData,
+        servers: [],
       } as AppState;
     },
     mutations: {

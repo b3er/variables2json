@@ -192,6 +192,20 @@ let props = defineProps<{
         fill-opacity="0.3"
       />
     </svg>
+
+    <svg
+      v-if="props.type == IconType.Add"
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M15.5 15.5V10.5H16.5V15.5H21.5V16.5H16.5V21.5H15.5V16.5H10.5V15.5H15.5Z"
+      />
+    </svg>
   </div>
 </template>
 

@@ -12,6 +12,7 @@ export enum IconType {
   Github = `github`,
   CornerResize = `corner-resize`,
   ArrowDown = `arrow-down`,
+  Add = `add`,
 }
 
 export enum TokenType {
@@ -66,6 +67,21 @@ export class VariableToken {
   }
 }
 
+export interface Server {
+  type: ServerType;
+  serverUrl: string;
+  token: string;
+  repo: string;
+  branch: string;
+  path: string;
+}
+
+export enum ServerType {
+  Github = `github`,
+  Gitlab = `gitlab`,
+  Azure = `azure`,
+}
+
 export interface VariableGroup {
   type: TokenType;
   tokens: Array<VariableToken> | undefined;
@@ -76,6 +92,7 @@ export interface AppState {
   loaded: boolean;
   variables: Array<VariableToken>;
   settings: SettingsData;
+  servers: Array<Server>;
 }
 
 export interface VariableValue {
