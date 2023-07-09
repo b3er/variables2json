@@ -2,10 +2,6 @@ module.exports = {
   env: {
     node: true
   },
-  globals: {
-    figma: "readonly",
-    __html__: "readonly"
-  },
   extends: ["eslint:recommended", "plugin:vue/vue3-recommended", "prettier"],
   parser: "vue-eslint-parser",
   parserOptions: {
@@ -17,5 +13,13 @@ module.exports = {
   rules: {
     "vue/multi-word-component-names": "off",
     "no-unused-vars": "off"
-  }
+  },
+  overrides: [
+    {
+      files: ["*.ts", "*.vue"],
+      rules: {
+        "no-undef": "off"
+      }
+    }
+  ]
 };
