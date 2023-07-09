@@ -206,6 +206,20 @@ let props = defineProps<{
         d="M15.5 15.5V10.5H16.5V15.5H21.5V16.5H16.5V21.5H15.5V16.5H10.5V15.5H15.5Z"
       />
     </svg>
+
+    <svg
+      v-if="props.type == IconType.Back"
+      width="17"
+      height="16"
+      viewBox="0 0 17 16"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M1.29289 7.99998L1.64645 7.64642L6.14645 3.14642L6.85355 3.85353L3.20711 7.49998L16.25 7.49998L16.25 8.49998L3.20711 8.49998L6.85355 12.1464L6.14645 12.8535L1.64645 8.35353L1.29289 7.99998Z"
+      />
+    </svg>
   </div>
 </template>
 

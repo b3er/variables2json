@@ -13,6 +13,7 @@ export enum IconType {
   CornerResize = `corner-resize`,
   ArrowDown = `arrow-down`,
   Add = `add`,
+  Back = `back`
 }
 
 export enum TokenType {
@@ -22,12 +23,12 @@ export enum TokenType {
   Boolean = `boolean`,
   Typography = `typography`,
   Effect = `effect`,
-  Grid = `grid`,
+  Grid = `grid`
 }
 
 export enum ColorFormatType {
   Hex = `hex`,
-  Rgba = `rgba`,
+  Rgba = `rgba`
 }
 
 export interface ModeValue {
@@ -68,6 +69,7 @@ export class VariableToken {
 }
 
 export interface Server {
+  id: string;
   type: ServerType;
   serverUrl: string;
   token: string;
@@ -79,7 +81,7 @@ export interface Server {
 export enum ServerType {
   Github = `github`,
   Gitlab = `gitlab`,
-  Azure = `azure`,
+  Azure = `azure`
 }
 
 export interface VariableGroup {

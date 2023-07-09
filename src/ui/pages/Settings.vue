@@ -10,12 +10,12 @@ let store = useStore();
 
 let excludePrivate = computed({
   get: () => store.state.settings.excludePrivate,
-  set: (checked) => store.commit("settingsTogglePrivate", checked),
+  set: (checked) => store.commit("settingsTogglePrivate", checked)
 });
 
 let colorFormat = computed({
   get: () => store.state.settings.colorFormat,
-  set: (format) => store.commit("settingsSetColorFormat", format),
+  set: (format) => store.commit("settingsSetColorFormat", format)
 });
 </script>
 
@@ -44,7 +44,9 @@ let colorFormat = computed({
     <div class="section">
       <div class="header">
         <span class="title">Server sync</span>
-        <Icon :type="IconType.Add" />
+        <router-link to="/settings/add-server">
+          <Icon :type="IconType.Add" />
+        </router-link>
       </div>
 
       <SyncSettingsList />

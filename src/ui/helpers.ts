@@ -4,7 +4,7 @@ import {
   ColorFormatType,
   TokenType,
   VariableToken,
-  VariableValue,
+  VariableValue
 } from "./models";
 
 function _convertedValue(
@@ -51,7 +51,7 @@ export function jsonFromState(state: AppState): string {
     if (collection == undefined) {
       collection = {
         name: variable.collection,
-        modes: [],
+        modes: []
       } as Collection;
 
       output.push(collection);
@@ -66,7 +66,7 @@ export function jsonFromState(state: AppState): string {
         isAlias: value.isAlias,
         value: value.isAlias
           ? value.value
-          : _convertedValue(colorFormat, variable.type, value.value),
+          : _convertedValue(colorFormat, variable.type, value.value)
       } as VariableValue;
 
       if (mode != undefined) {
@@ -74,7 +74,7 @@ export function jsonFromState(state: AppState): string {
       } else {
         collection?.modes.push({
           name: value.modeName,
-          variables: [tokenValue],
+          variables: [tokenValue]
         });
       }
     }
@@ -84,9 +84,15 @@ export function jsonFromState(state: AppState): string {
     {
       version: state.version,
       metadata: {},
-      collections: output,
+      collections: output
     },
     null,
     2
   );
 }
+
+export const uuid = (a: string = ""): string =>
+  a
+    ? /* eslint-disable no-bitwise */
+      ((Number(a) ^ (Math.random() * 16)) >> (Number(a) / 4)).toString(16)
+    : `${1e7}-${1e3}-${4e3}-${8e3}-${1e11}`.replace(/[018]/g, uuid);
