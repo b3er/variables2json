@@ -8,10 +8,10 @@ async function getStateAsync(): Promise<AppState> {
   let variables = getVariables();
 
   return {
-    version: "1.0.4",
+    version: "1.0.5",
     loaded: true,
     variables: variables,
-    settings: settings,
+    settings: settings
   } as AppState;
 }
 
@@ -23,7 +23,7 @@ async function loadSettingsAsync(): Promise<SettingsData> {
   } else {
     return {
       excludePrivate: false,
-      colorFormat: "hex",
+      colorFormat: "hex"
     } as SettingsData;
   }
 }

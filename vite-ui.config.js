@@ -18,7 +18,7 @@ export default defineConfig({
     cssCodeSplit: false,
     brotliSize: false,
     emptyOutDir: false,
-    outDir: "./dist",
+    outDir: path.resolve(__dirname, "./dist"),
     rollupOptions: {
       output: {
         inlineDynamicImports: true

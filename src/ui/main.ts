@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import ui from "./ui.vue";
+import ui from "./index.vue";
 import Variables from "@/pages/Variables.vue";
 import Composites from "@/pages/Composites.vue";
 import Settings from "@/pages/Settings.vue";
@@ -11,12 +11,12 @@ const routes = [
   { path: "/", redirect: "/variables/list" },
   { path: "/variables/:type", component: Variables, name: "variables" },
   { path: "/composites", component: Composites },
-  { path: "/settings", component: Settings },
+  { path: "/settings", component: Settings }
 ];
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes,
+  routes
 });
 
 const store = pluginStore();

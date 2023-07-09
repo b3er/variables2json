@@ -1,11 +1,14 @@
 <script lang="ts" setup>
 import { IconType } from "@/models";
+import { onClickOutside } from "@vueuse/core";
 import Icon from "@/components/Icon.vue";
+import { ref } from "vue";
 
+let target = ref();
 const emit = defineEmits(["update:modelValue"]);
 defineProps<{
-  options: Array<String>;
-  modelValue: String;
+  options: Array<string>;
+  modelValue: string;
 }>();
 
 function toggleOptions() {
@@ -17,10 +20,15 @@ function onSelect(option: String) {
   console.log("click option", option);
   emit("update:modelValue", option);
 }
+
+onClickOutside(target, () => {
+  let options = document.querySelector(".options") as HTMLElement;
+  options.style.display = "none";
+});
 </script>
 
 <template>
-  <div class="dropdown" @click="toggleOptions">
+  <div ref="target" class="dropdown" @click="toggleOptions">
     <span>{{ modelValue }}</span>
     <Icon :type="IconType.ArrowDown" :muted="true" />
 
@@ -48,8 +56,20 @@ function onSelect(option: String) {
   border-radius: 4px;
   min-width: 100px;
   height: 32px;
-  border: 1px solid var(--colors-selected);
   cursor: pointer;
+  border: 1px solid var(--colors-window-background);
+
+  span {
+    flex: auto;
+    text-overflow: ellipsis;
+    max-lines: 1;
+    text-align: right;
+    padding-right: 8px;
+  }
+}
+
+.dropdown:hover {
+  border: 1px solid var(--colors-selected);
 }
 
 .options {
@@ -63,10 +83,6 @@ function onSelect(option: String) {
   z-index: 1;
   padding: 8px 0;
   display: none;
-}
-
-.dropdown:hover {
-  border: 1px solid var(--colors-primary-text);
 }
 
 .option {

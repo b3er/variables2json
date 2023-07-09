@@ -18,7 +18,6 @@ window.onmessage = (e) => {
 store.watch(
   (state) => state.settings,
   (proxy) => {
-    console.log("Updated settings => post to backend");
     let settings = structuredClone({ ...proxy }) as SettingsData;
 
     console.log();
