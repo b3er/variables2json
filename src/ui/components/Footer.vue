@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { computed } from "vue";
-import { useStore } from "vuex";
-import { Store } from "vuex/types/index.js";
+import { useStore, Store } from "vuex";
 import { AppState, IconType } from "@/models";
 import { jsonFromState } from "@/helpers";
 import Icon from "@/components/Icon.vue";

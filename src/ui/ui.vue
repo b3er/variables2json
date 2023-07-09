@@ -26,8 +26,8 @@ store.watch(
       {
         pluginMessage: {
           type: "updateSettings",
-          data: settings,
-        },
+          data: settings
+        }
       },
       "*"
     );

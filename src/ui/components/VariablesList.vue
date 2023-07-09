@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { computed, ref } from "vue";
-import { useStore } from "vuex";
-import { Store } from "vuex/types/index.js";
+import { useStore, Store } from "vuex";
 import VariableListPanel from "@/components/VariableListPanel.vue";
 import ColorBox from "@/components/ColorBox.vue";
 import NumberBox from "@/components/NumberBox.vue";
@@ -36,51 +35,51 @@ let rowStates = ref<Map<TokenType, RowState>>(
       TokenType.Color,
       {
         collapsed: true,
-        name: "Colors",
-      },
+        name: "Colors"
+      }
     ],
     [
       TokenType.Number,
       {
         collapsed: true,
-        name: "Numbers",
-      },
+        name: "Numbers"
+      }
     ],
     [
       TokenType.String,
       {
         collapsed: true,
-        name: "Strings",
-      },
+        name: "Strings"
+      }
     ],
     [
       TokenType.Boolean,
       {
         collapsed: true,
-        name: "Booleans",
-      },
+        name: "Booleans"
+      }
     ],
     [
       TokenType.Typography,
       {
         collapsed: true,
-        name: "Typography",
-      },
+        name: "Typography"
+      }
     ],
     [
       TokenType.Effect,
       {
         collapsed: true,
-        name: "Effects",
-      },
+        name: "Effects"
+      }
     ],
     [
       TokenType.Grid,
       {
         collapsed: true,
-        name: "Grids",
-      },
-    ],
+        name: "Grids"
+      }
+    ]
   ])
 );
 
@@ -115,7 +114,7 @@ function toggle(type: TokenType) {
 function updateRow(type: TokenType, collapsed: boolean) {
   rowStates.value.set(type, {
     ...rowStates.value.get(type)!,
-    collapsed: collapsed,
+    collapsed: collapsed
   });
 }
 
@@ -144,7 +143,7 @@ function rowName(type: TokenType): string {
 
 defineExpose({
   expandAll,
-  collapseAll,
+  collapseAll
 });
 </script>
 

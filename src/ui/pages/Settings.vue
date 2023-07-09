@@ -1,22 +1,19 @@
 <script lang="ts" setup>
-import { useStore } from "vuex";
+import { useStore, Store } from "vuex";
 import DropDown from "@/components/DropDown.vue";
-import Icon from "@/components/Icon.vue";
 import { computed } from "vue";
-import { Store } from "vuex/types/index.js";
 import { AppState } from "@/models";
-import { IconType } from "@/models";
 
 let store = useStore() as Store<AppState>;
 
 let excludePrivate = computed({
   get: () => store.state.settings.excludePrivate,
-  set: (checked) => store.commit("settingsTogglePrivate", checked),
+  set: (checked) => store.commit("settingsTogglePrivate", checked)
 });
 
 let colorFormat = computed({
   get: () => store.state.settings.colorFormat,
-  set: (format) => store.commit("settingsSetColorFormat", format),
+  set: (format) => store.commit("settingsSetColorFormat", format)
 });
 </script>
 

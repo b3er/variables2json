@@ -10,6 +10,7 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src/ui")
     }
   },
+  root: path.resolve(__dirname, "./src/ui/"),
   build: {
     target: "esnext",
     assetsInlineLimit: 100000000,
@@ -17,12 +18,13 @@ export default defineConfig({
     cssCodeSplit: false,
     brotliSize: false,
     emptyOutDir: false,
+    outDir: "./dist",
     rollupOptions: {
       output: {
         inlineDynamicImports: true
       },
       input: {
-        index: path.resolve(__dirname, "src/ui/ui.html")
+        index: path.resolve(__dirname, "./src/ui/index.html")
       }
     }
   }

@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import { useStore } from "vuex";
-import { Store } from "vuex/types/index.js";
+import { useStore, Store } from "vuex";
 import { computed } from "vue";
 import { AppState } from "@/models";
 import { jsonFromState } from "@/helpers";
