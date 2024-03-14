@@ -19,9 +19,12 @@ export function pluginStore(): Store<AppState> {
         variables: [],
         settings: {
           excludePrivate: false,
-          colorFormat: "hex"
+          colorFormat: "hex",
+          githubToken: "",
+          repo: "",
         } as SettingsData,
-        servers: []
+        servers: [],
+        loadingPR: false
       } as AppState;
     },
     mutations: {
@@ -53,7 +56,36 @@ export function pluginStore(): Store<AppState> {
       },
       removeServer(state: AppState, id: string) {
         state.servers = state.servers.filter((s) => s.id !== id);
+      },
+      settingsSetGithubToken(state: AppState, newValue: string) {
+        state.settings = {
+          ...state.settings,
+          githubToken: newValue
+        };
+      },
+      settingsSetRepo(state: AppState, newValue: string) {
+        state.settings = {
+          ...state.settings,
+          repo: newValue
+        };
+      },
+      setLoadingPR(state: AppState, newValue: boolean) {
+        state.loadingPR = newValue;
       }
-    }
+    },
+    // Todo: Add action to load settings from local storage
+    // actions: {
+    //   async loadSettings({ commit }) {
+    //     const githubToken = localStorage.getItem("githubToken");
+
+    //     if (githubToken) {
+    //       commit('setGithubToken', githubToken);
+    //     }
+    //     const repo = localStorage.getItem("repo");
+    //     if (repo) {
+    //       commit('setRepo', repo);
+    //     }
+    //   }
+    // }
   });
 }

@@ -5,9 +5,12 @@ import Footer from "@/components/Footer.vue";
 import ResizeIcon from "@/components/ResizeIcon.vue";
 import { SettingsData } from "@/models";
 import { useStore } from "@/store";
+import { computed } from 'vue';
 
 let store = useStore();
+let isLoadingPR = computed<boolean>(() => store.state.loadingPR);
 
+// store.dispatch("loadSettings");
 window.onmessage = (e) => {
   if (e.data.pluginMessage.type === "updateState") {
     console.log("updateState", e.data.pluginMessage.data);
@@ -36,6 +39,10 @@ store.watch(
 </script>
 
 <template>
+  <div v-if="isLoadingPR" class="loading-container">
+    <p>Trying to create pr...</p>
+  </div>
+  <div v-else>
   <Navigation />
   <main>
     <router-view></router-view>
@@ -44,6 +51,7 @@ store.watch(
   </main>
 
   <Footer />
+</div>
 </template>
 
 <style lang="scss">
@@ -162,5 +170,12 @@ main {
   right: 1px;
   bottom: 1px;
   cursor: nwse-resize;
+}
+.loading-container {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex:1;
+  
 }
 </style>

@@ -13,7 +13,8 @@ export enum IconType {
   CornerResize = `corner-resize`,
   ArrowDown = `arrow-down`,
   Add = `add`,
-  Back = `back`
+  Back = `back`,
+  PullRequest = `pull-request`,
 }
 
 export enum TokenType {
@@ -95,6 +96,7 @@ export interface AppState {
   variables: Array<VariableToken>;
   settings: SettingsData;
   servers: Array<Server>;
+  loadingPR: boolean;
 }
 
 export interface VariableValue {
@@ -121,4 +123,6 @@ export interface ResizeOptions {
 export interface SettingsData {
   excludePrivate: boolean;
   colorFormat: ColorFormatType;
+  githubToken: string;
+  repo: string;
 }

@@ -17,6 +17,18 @@ let colorFormat = computed({
   get: () => store.state.settings.colorFormat,
   set: (format) => store.commit("settingsSetColorFormat", format)
 });
+let repo = computed({
+  get: () => store.state.settings.repo,
+  set: (repo) => {
+    store.commit("settingsSetRepo", repo)
+  }
+});
+let githubToken = computed({
+  get: () => store.state.settings.githubToken,
+  set: (token) => {
+    store.commit("settingsSetGithubToken", token)
+  }
+});
 </script>
 
 <template>
@@ -38,6 +50,19 @@ let colorFormat = computed({
           <DropDown v-model="colorFormat" :options="['hex', 'rgba']" />
         </div>
       </div>
+      <div class="row regular">
+        <label>Repository name (username/repo)</label>
+        <div class="value">
+
+          <input v-model="repo" type="text" />
+        </div>
+      </div>
+
+      <div class="row regular">
+        <label>GitHub Token</label>
+        <div class="value">
+          <input v-model="githubToken" type="password" />
+        </div>
     </div>
 
     <!-- Sync settings -->
@@ -50,6 +75,8 @@ let colorFormat = computed({
       </div>
 
       <SyncSettingsList />
+     
+      </div>
     </div>
   </div>
 </template>
