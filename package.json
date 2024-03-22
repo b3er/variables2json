@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@figma/plugin-typings": "^1.40.0",
+    "axios": "^1.6.7",
     "figma-plugin-ds": "^1.0.1",
     "prettier": "^2.8.8",
     "vue": "^3.2.26",

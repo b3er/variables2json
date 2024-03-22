@@ -7,6 +7,9 @@ import {
   VariableValue
 } from "./models";
 
+import axios from 'axios';
+import { useStore } from './store';
+
 function _convertedValue(
   format: ColorFormatType,
   type: TokenType,
@@ -14,7 +17,6 @@ function _convertedValue(
 ): any {
   if (type == TokenType.Color && format == ColorFormatType.Hex) {
     // convert r, g, b, a to hex
-    console.log(value);
 
     let hex = (
       value.r.toString(16).padStart(2, "0") +
@@ -96,3 +98,73 @@ export const uuid = (a: string = ""): string =>
     ? /* eslint-disable no-bitwise */
       ((Number(a) ^ (Math.random() * 16)) >> (Number(a) / 4)).toString(16)
     : `${1e7}-${1e3}-${4e3}-${8e3}-${1e11}`.replace(/[018]/g, uuid);
+
+export async function createPR(repo: string, json: string , githubToken: string) {
+  const owner = repo.split('/')[0];
+  const repoName = repo.split('/')[1];
+  
+  const githubApi = axios.create({
+    baseURL: 'https://api.github.com',
+    headers: {
+      Authorization: `token ${githubToken}`,
+    },
+  });
+  // Get the SHA of the latest commit on the master branch
+  const { data: baseCommit } = await githubApi.get(`/repos/${repo}/git/refs/heads/master`);
+
+  // Get the tree of the latest commit
+  const { data: baseTree } = await githubApi.get(`/repos/${repo}/git/trees/${baseCommit.object.sha}`);
+
+  // Create blob for JSON file
+  const blob = await githubApi.post(`/repos/${repo}/git/blobs`, {
+    content: btoa(json),
+    encoding: 'base64',
+  });
+
+  // Create tree with blob
+  const tree = await githubApi.post(`/repos/${repo}/git/trees`, {
+    base_tree: baseTree.sha,
+    tree: [
+      {
+        path: 'variables.json',
+        mode: '100644',
+        type: 'blob',
+        sha: blob.data.sha,
+      },
+    ],
+  });
+
+  // Create commit with tree
+  const commit = await githubApi.post(`/repos/${repo}/git/commits`, {
+    message: 'Add variables.json',
+    tree: tree.data.sha,
+    owner: owner,
+    parents: [baseCommit.object.sha],
+  });
+
+
+  // Create a new branch
+  const branchName = 'newVariables-' + Date.now();
+    await githubApi.post(`/repos/${repo}/git/refs`, {
+    ref: 'refs/heads/' + branchName, 
+    sha: commit.data.sha,
+    });
+
+  // Create PR
+  const pr = await githubApi.post(`/repos/${repo}/pulls`, {
+    title: 'Add variables.json',
+    head: `${owner}:${branchName}`,
+    body: 'Please pull these awesome changes in!',
+    base: 'master',
+    owner: owner,
+    repo: repoName,
+    headers: {
+      'X-GitHub-Api-Version': '2022-11-28'
+    }
+  });
+  return pr.data;
+}
+
+
+
+    
