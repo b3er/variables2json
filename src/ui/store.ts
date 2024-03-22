@@ -73,19 +73,5 @@ export function pluginStore(): Store<AppState> {
         state.loadingPR = newValue;
       }
     },
-    // Todo: Add action to load settings from local storage
-    // actions: {
-    //   async loadSettings({ commit }) {
-    //     const githubToken = localStorage.getItem("githubToken");
-
-    //     if (githubToken) {
-    //       commit('setGithubToken', githubToken);
-    //     }
-    //     const repo = localStorage.getItem("repo");
-    //     if (repo) {
-    //       commit('setRepo', repo);
-    //     }
-    //   }
-    // }
   });
 }
