@@ -167,7 +167,8 @@ function processCollection(
           isAlias: isVariableAlias(value),
           value: parseValue(value),
         } as ModeValue;
-      })
+      }),
+      variable.description
     );
 
     tokens.push(token);

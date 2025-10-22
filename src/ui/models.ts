@@ -44,7 +44,8 @@ export class VariableToken {
       variableProxy.collection,
       variableProxy.name,
       variableProxy.type,
-      variableProxy.values
+      variableProxy.values,
+      variableProxy.description
     );
   }
 
@@ -52,12 +53,14 @@ export class VariableToken {
     public collection: string,
     public name: string,
     public type: TokenType,
-    public values: Array<ModeValue>
+    public values: Array<ModeValue>,
+    public description?: string,
   ) {
     this.collection = collection;
     this.name = name;
     this.type = type;
     this.values = values;
+    this.description = description;
   }
 
   isPrivate(): boolean {

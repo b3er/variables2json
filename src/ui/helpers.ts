@@ -68,7 +68,8 @@ export function jsonFromState(state: AppState): string {
         isAlias: value.isAlias,
         value: value.isAlias
           ? value.value
-          : _convertedValue(colorFormat, variable.type, value.value)
+          : _convertedValue(colorFormat, variable.type, value.value),
+        description: variable.description
       } as VariableValue;
 
       if (mode != undefined) {
@@ -102,7 +103,7 @@ export const uuid = (a: string = ""): string =>
 export async function createPR(repo: string, json: string , githubToken: string) {
   const owner = repo.split('/')[0];
   const repoName = repo.split('/')[1];
-  
+
   const githubApi = axios.create({
     baseURL: 'https://api.github.com',
     headers: {
@@ -146,7 +147,7 @@ export async function createPR(repo: string, json: string , githubToken: string)
   // Create a new branch
   const branchName = 'newVariables-' + Date.now();
     await githubApi.post(`/repos/${repo}/git/refs`, {
-    ref: 'refs/heads/' + branchName, 
+    ref: 'refs/heads/' + branchName,
     sha: commit.data.sha,
     });
 
@@ -167,4 +168,3 @@ export async function createPR(repo: string, json: string , githubToken: string)
 
 
 
-    
