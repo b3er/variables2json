@@ -140,4 +140,5 @@ export interface SettingsData {
   defaultBranch: string;
   filePath: string;
   commitMessage: string;
+  branchName: string;
 }

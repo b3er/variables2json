@@ -28,6 +28,7 @@ export function pluginStore(): Store<AppState> {
           defaultBranch: "main",
           filePath: "variables.json",
           commitMessage: "update variables.json",
+          branchName: "update-design-variables",
         } as SettingsData,
         servers: [],
         loadingPR: false
@@ -109,6 +110,12 @@ export function pluginStore(): Store<AppState> {
         state.settings = {
           ...state.settings,
           commitMessage: newValue
+        };
+      },
+      settingsSetBranchName(state: AppState, newValue: string) {
+        state.settings = {
+          ...state.settings,
+          branchName: newValue
         };
       },
       setLoadingPR(state: AppState, newValue: boolean) {

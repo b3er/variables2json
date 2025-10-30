@@ -70,6 +70,13 @@ let commitMessage = computed({
     store.commit("settingsSetCommitMessage", message)
   }
 });
+
+let branchName = computed({
+  get: () => store.state.settings.branchName,
+  set: (name) => {
+    store.commit("settingsSetBranchName", name)
+  }
+});
 </script>
 
 <template>
@@ -122,6 +129,13 @@ let commitMessage = computed({
         <label>Commit Message</label>
         <div class="value">
           <input v-model="commitMessage" type="text" placeholder="update variables.json"/>
+        </div>
+      </div>
+
+      <div class="row regular">
+        <label>Branch Name</label>
+        <div class="value">
+          <input v-model="branchName" type="text" placeholder="update-design-variables"/>
         </div>
       </div>
 

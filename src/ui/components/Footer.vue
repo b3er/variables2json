@@ -16,6 +16,7 @@ let gitlabToken = computed<string>(() => store.state.settings.gitlabToken);
 let defaultBranch = computed<string>(() => store.state.settings.defaultBranch);
 let filePath = computed<string>(() => store.state.settings.filePath);
 let commitMessage = computed<string>(() => store.state.settings.commitMessage);
+let branchName = computed<string>(() => store.state.settings.branchName);
 let isLoading = ref(false);
 
 function downloadJson() {
@@ -44,7 +45,7 @@ let sendPr = async () => {
         store.commit("setLoadingPR", false);
         return;
       }
-      const pr = await createPR(repo.value, json, githubToken.value, defaultBranch.value, filePath.value, commitMessage.value);
+      const pr = await createPR(repo.value, json, githubToken.value, defaultBranch.value, filePath.value, commitMessage.value, branchName.value);
       store.commit("setLoadingPR", false);
       alert('Pull request created successfully! \n\n' + pr.html_url);
     } else if (provider.value === ProviderType.Gitlab) {
@@ -53,7 +54,7 @@ let sendPr = async () => {
         store.commit("setLoadingPR", false);
         return;
       }
-      const mr = await createGitLabMR(gitlabProject.value, json, gitlabToken.value, defaultBranch.value, filePath.value, commitMessage.value);
+      const mr = await createGitLabMR(gitlabProject.value, json, gitlabToken.value, defaultBranch.value, filePath.value, commitMessage.value, branchName.value);
       store.commit("setLoadingPR", false);
       alert('Merge request created successfully! \n\n' + mr.web_url);
     }

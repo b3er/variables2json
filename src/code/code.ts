@@ -31,6 +31,7 @@ async function loadSettingsAsync(): Promise<SettingsData> {
     defaultBranch: "main",
     filePath: "variables.json",
     commitMessage: "update variables.json",
+    branchName: "update-design-variables",
   };
 
   if (settingsOrNull) {

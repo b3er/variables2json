@@ -100,7 +100,7 @@ export const uuid = (a: string = ""): string =>
       ((Number(a) ^ (Math.random() * 16)) >> (Number(a) / 4)).toString(16)
     : `${1e7}-${1e3}-${4e3}-${8e3}-${1e11}`.replace(/[018]/g, uuid);
 
-export async function createPR(repo: string, json: string, githubToken: string, defaultBranch: string = 'master', filePath: string = 'variables.json', commitMessage: string = 'update variables.json') {
+export async function createPR(repo: string, json: string, githubToken: string, defaultBranch: string = 'master', filePath: string = 'variables.json', commitMessage: string = 'update variables.json', branchNamePrefix: string = 'update-design-variables') {
   const owner = repo.split('/')[0];
   const repoName = repo.split('/')[1];
 
@@ -144,8 +144,8 @@ export async function createPR(repo: string, json: string, githubToken: string, 
   });
 
 
-  // Create a new branch
-  const branchName = 'newVariables-' + Date.now();
+  // Create a new branch with timestamp to avoid conflicts
+  const branchName = `${branchNamePrefix}-${Date.now()}`;
     await githubApi.post(`/repos/${repo}/git/refs`, {
     ref: 'refs/heads/' + branchName,
     sha: commit.data.sha,
@@ -166,7 +166,7 @@ export async function createPR(repo: string, json: string, githubToken: string, 
   return pr.data;
 }
 
-export async function createGitLabMR(project: string, json: string, gitlabToken: string, defaultBranch: string = 'main', filePath: string = 'variables.json', commitMessage: string = 'update variables.json') {
+export async function createGitLabMR(project: string, json: string, gitlabToken: string, defaultBranch: string = 'main', filePath: string = 'variables.json', commitMessage: string = 'update variables.json', branchNamePrefix: string = 'update-design-variables') {
   // URL-encode the project path (e.g., "group/project" -> "group%2Fproject")
   const encodedProject = encodeURIComponent(project);
   
@@ -177,8 +177,8 @@ export async function createGitLabMR(project: string, json: string, gitlabToken:
     },
   });
 
-  // Create a new branch
-  const branchName = 'newVariables-' + Date.now();
+  // Create a new branch with timestamp to avoid conflicts
+  const branchName = `${branchNamePrefix}-${Date.now()}`;
   await gitlabApi.post(`/projects/${encodedProject}/repository/branches`, {
     branch: branchName,
     ref: defaultBranch,
