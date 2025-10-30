@@ -325,6 +325,42 @@ npm run build
 npm run lint
 npm run format
 ```
+
+### Creating Releases
+
+The project uses GitHub Actions to automate releases.
+
+#### Automatic Release (Recommended)
+
+1. Update version in `manifest.json` if needed
+2. Commit your changes
+3. Create and push a version tag:
+   ```bash
+   git tag v1.0.0
+   git push origin v1.0.0
+   ```
+4. GitHub Action automatically:
+   - Builds the plugin
+   - Creates a zip file with `manifest.json` and `dist/`
+   - Creates a GitHub release with the zip attached
+   - Generates release notes from commits
+
+#### Manual Release
+
+1. Go to **Actions** tab in GitHub
+2. Select **Manual Release** workflow
+3. Click **Run workflow**
+4. Enter version number (e.g., `1.0.0`)
+5. Click **Run workflow** button
+
+The release package (`variables2json-v*.zip`) contains:
+- `manifest.json` - Plugin manifest
+- `dist/` - Built plugin files
+  - `code.js` - Backend code
+  - `index.html` - UI bundle
+
+Users can download the zip, extract it, and load it in Figma via **Plugins → Development → Import plugin from manifest**.
+
 Built with:
 - Vue 3
 - TypeScript
