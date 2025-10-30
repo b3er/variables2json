@@ -1,4 +1,4 @@
-import { AppState, ResizeOptions, Server, SettingsData } from "../ui/models";
+import { AppState, ResizeOptions, Server, SettingsData, ProviderType } from "../ui/models";
 import { getVariables } from "./modules/variables";
 
 figma.showUI(__html__, { themeColors: true, width: 320, height: 500 });
@@ -20,13 +20,22 @@ async function getStateAsync(): Promise<AppState> {
 async function loadSettingsAsync(): Promise<SettingsData> {
   let settingsOrNull = await figma.clientStorage.getAsync("settings");
 
+  const defaults = {
+    excludePrivate: false,
+    colorFormat: "hex",
+    provider: ProviderType.Github,
+    githubToken: "",
+    gitlabToken: "",
+    repo: "",
+    gitlabProject: "",
+    defaultBranch: "main",
+  };
+
   if (settingsOrNull) {
-    return settingsOrNull as SettingsData;
+    // Merge with defaults to ensure new fields exist
+    return Object.assign({}, defaults, settingsOrNull) as SettingsData;
   } else {
-    return {
-      excludePrivate: false,
-      colorFormat: "hex",
-    } as SettingsData;
+    return defaults as SettingsData;
   }
 }
 

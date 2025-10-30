@@ -10,6 +10,7 @@ export enum IconType {
   Uncheck = `uncheck`,
   Download = `download`,
   Github = `github`,
+  Gitlab = `gitlab`,
   CornerResize = `corner-resize`,
   ArrowDown = `arrow-down`,
   Add = `add`,
@@ -123,9 +124,18 @@ export interface ResizeOptions {
   h: number;
 }
 
+export enum ProviderType {
+  Github = `github`,
+  Gitlab = `gitlab`
+}
+
 export interface SettingsData {
   excludePrivate: boolean;
   colorFormat: ColorFormatType;
+  provider: ProviderType;
   githubToken: string;
+  gitlabToken: string;
   repo: string;
+  gitlabProject: string;
+  defaultBranch: string;
 }

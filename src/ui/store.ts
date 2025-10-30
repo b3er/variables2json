@@ -1,6 +1,6 @@
 import { createStore, useStore as baseUseStore } from "vuex";
 import { Store } from "vuex/types/index.js";
-import { SettingsData, AppState, ColorFormatType, Server } from "@/models";
+import { SettingsData, AppState, ColorFormatType, Server, ProviderType } from "@/models";
 import { uuid } from "@/helpers";
 import { InjectionKey } from "vue";
 
@@ -20,8 +20,12 @@ export function pluginStore(): Store<AppState> {
         settings: {
           excludePrivate: false,
           colorFormat: "hex",
+          provider: ProviderType.Github,
           githubToken: "",
+          gitlabToken: "",
           repo: "",
+          gitlabProject: "",
+          defaultBranch: "main",
         } as SettingsData,
         servers: [],
         loadingPR: false
@@ -67,6 +71,30 @@ export function pluginStore(): Store<AppState> {
         state.settings = {
           ...state.settings,
           repo: newValue
+        };
+      },
+      settingsSetGitlabToken(state: AppState, newValue: string) {
+        state.settings = {
+          ...state.settings,
+          gitlabToken: newValue
+        };
+      },
+      settingsSetGitlabProject(state: AppState, newValue: string) {
+        state.settings = {
+          ...state.settings,
+          gitlabProject: newValue
+        };
+      },
+      settingsSetProvider(state: AppState, newValue: ProviderType) {
+        state.settings = {
+          ...state.settings,
+          provider: newValue
+        };
+      },
+      settingsSetDefaultBranch(state: AppState, newValue: string) {
+        state.settings = {
+          ...state.settings,
+          defaultBranch: newValue
         };
       },
       setLoadingPR(state: AppState, newValue: boolean) {

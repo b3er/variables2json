@@ -164,6 +164,36 @@ let props = defineProps<{
     </svg>
 
     <svg
+      v-if="props.type == IconType.Gitlab"
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M16 22.5L19.5 12H12.5L16 22.5Z"
+      />
+      <path
+        d="M16 22.5L12.5 12H8L16 22.5Z"
+      />
+      <path
+        d="M8 12L7 15L16 22.5L8 12Z"
+      />
+      <path
+        d="M8 12H12.5L10.5 6.5L8 12Z"
+      />
+      <path
+        d="M16 22.5L19.5 12H24L16 22.5Z"
+      />
+      <path
+        d="M24 12L25 15L16 22.5L24 12Z"
+      />
+      <path
+        d="M24 12H19.5L21.5 6.5L24 12Z"
+      />
+    </svg>
+
+    <svg
       v-if="props.type == IconType.CornerResize"
       width="11"
       height="11"

@@ -100,7 +100,7 @@ export const uuid = (a: string = ""): string =>
       ((Number(a) ^ (Math.random() * 16)) >> (Number(a) / 4)).toString(16)
     : `${1e7}-${1e3}-${4e3}-${8e3}-${1e11}`.replace(/[018]/g, uuid);
 
-export async function createPR(repo: string, json: string , githubToken: string) {
+export async function createPR(repo: string, json: string, githubToken: string, defaultBranch: string = 'master') {
   const owner = repo.split('/')[0];
   const repoName = repo.split('/')[1];
 
@@ -110,8 +110,8 @@ export async function createPR(repo: string, json: string , githubToken: string)
       Authorization: `token ${githubToken}`,
     },
   });
-  // Get the SHA of the latest commit on the master branch
-  const { data: baseCommit } = await githubApi.get(`/repos/${repo}/git/refs/heads/master`);
+  // Get the SHA of the latest commit on the default branch
+  const { data: baseCommit } = await githubApi.get(`/repos/${repo}/git/refs/heads/${defaultBranch}`);
 
   // Get the tree of the latest commit
   const { data: baseTree } = await githubApi.get(`/repos/${repo}/git/trees/${baseCommit.object.sha}`);
@@ -156,7 +156,7 @@ export async function createPR(repo: string, json: string , githubToken: string)
     title: 'Add variables.json',
     head: `${owner}:${branchName}`,
     body: 'Please pull these awesome changes in!',
-    base: 'master',
+    base: defaultBranch,
     owner: owner,
     repo: repoName,
     headers: {
@@ -164,6 +164,48 @@ export async function createPR(repo: string, json: string , githubToken: string)
     }
   });
   return pr.data;
+}
+
+export async function createGitLabMR(project: string, json: string, gitlabToken: string, defaultBranch: string = 'main') {
+  // URL-encode the project path (e.g., "group/project" -> "group%2Fproject")
+  const encodedProject = encodeURIComponent(project);
+  
+  const gitlabApi = axios.create({
+    baseURL: 'https://gitlab.com/api/v4',
+    headers: {
+      'PRIVATE-TOKEN': gitlabToken,
+    },
+  });
+
+  // Create a new branch
+  const branchName = 'newVariables-' + Date.now();
+  await gitlabApi.post(`/projects/${encodedProject}/repository/branches`, {
+    branch: branchName,
+    ref: defaultBranch,
+  });
+
+  // Create commit with the variables.json file
+  await gitlabApi.post(`/projects/${encodedProject}/repository/commits`, {
+    branch: branchName,
+    commit_message: 'Add variables.json',
+    actions: [
+      {
+        action: 'create',
+        file_path: 'variables.json',
+        content: json,
+      },
+    ],
+  });
+
+  // Create merge request
+  const mr = await gitlabApi.post(`/projects/${encodedProject}/merge_requests`, {
+    source_branch: branchName,
+    target_branch: defaultBranch,
+    title: 'Add variables.json',
+    description: 'Please merge these awesome changes in!',
+  });
+
+  return mr.data;
 }
 
 

@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import { computed } from "vue";
 import { useStore } from "@/store";
-import { IconType } from "@/models";
+import { IconType, ProviderType } from "@/models";
 import DropDown from "@/components/DropDown.vue";
+import ProviderDropdown from "@/components/ProviderDropdown.vue";
 import SyncSettingsList from "@/components/SyncSettingsList.vue";
 import Icon from "@/components/Icon.vue";
 
@@ -17,16 +18,44 @@ let colorFormat = computed({
   get: () => store.state.settings.colorFormat,
   set: (format) => store.commit("settingsSetColorFormat", format)
 });
+
+let provider = computed({
+  get: () => store.state.settings.provider,
+  set: (provider) => store.commit("settingsSetProvider", provider)
+});
+
 let repo = computed({
   get: () => store.state.settings.repo,
   set: (repo) => {
     store.commit("settingsSetRepo", repo)
   }
 });
+
 let githubToken = computed({
   get: () => store.state.settings.githubToken,
   set: (token) => {
     store.commit("settingsSetGithubToken", token)
+  }
+});
+
+let gitlabProject = computed({
+  get: () => store.state.settings.gitlabProject,
+  set: (project) => {
+    store.commit("settingsSetGitlabProject", project)
+  }
+});
+
+let gitlabToken = computed({
+  get: () => store.state.settings.gitlabToken,
+  set: (token) => {
+    store.commit("settingsSetGitlabToken", token)
+  }
+});
+
+let defaultBranch = computed({
+  get: () => store.state.settings.defaultBranch,
+  set: (branch) => {
+    store.commit("settingsSetDefaultBranch", branch)
   }
 });
 </script>
@@ -50,19 +79,59 @@ let githubToken = computed({
           <DropDown v-model="colorFormat" :options="['hex', 'rgba']" />
         </div>
       </div>
-      <div class="row regular">
-        <label>Repository name (username/repo)</label>
-        <div class="value">
+    </div>
 
-          <input v-model="repo" type="text" />
+    <!-- Git Provider Settings -->
+    <div class="section">
+      <span class="title">Git Provider</span>
+      
+      <div class="row regular">
+        <label>Provider</label>
+        <div class="value">
+          <ProviderDropdown v-model="provider" />
         </div>
       </div>
 
       <div class="row regular">
-        <label>GitHub Token</label>
+        <label>Default Branch</label>
         <div class="value">
-          <input v-model="githubToken" type="password" />
+          <input v-model="defaultBranch" type="text" placeholder="main" />
         </div>
+      </div>
+
+      <!-- GitHub Settings -->
+      <template v-if="provider === ProviderType.Github">
+        <div class="row regular">
+          <label>Repository (username/repo)</label>
+          <div class="value">
+            <input v-model="repo" type="text" placeholder="owner/repo" />
+          </div>
+        </div>
+
+        <div class="row regular">
+          <label>GitHub Token</label>
+          <div class="value">
+            <input v-model="githubToken" type="password" />
+          </div>
+        </div>
+      </template>
+
+      <!-- GitLab Settings -->
+      <template v-if="provider === ProviderType.Gitlab">
+        <div class="row regular">
+          <label>Project Path (group/project)</label>
+          <div class="value">
+            <input v-model="gitlabProject" type="text" placeholder="group/project" />
+          </div>
+        </div>
+
+        <div class="row regular">
+          <label>GitLab Token</label>
+          <div class="value">
+            <input v-model="gitlabToken" type="password" />
+          </div>
+        </div>
+      </template>
     </div>
 
     <!-- Sync settings -->
@@ -75,8 +144,6 @@ let githubToken = computed({
       </div>
 
       <SyncSettingsList />
-     
-      </div>
     </div>
   </div>
 </template>
