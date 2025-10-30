@@ -139,4 +139,5 @@ export interface SettingsData {
   gitlabProject: string;
   defaultBranch: string;
   filePath: string;
+  commitMessage: string;
 }

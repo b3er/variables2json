@@ -27,6 +27,7 @@ export function pluginStore(): Store<AppState> {
           gitlabProject: "",
           defaultBranch: "main",
           filePath: "variables.json",
+          commitMessage: "update variables.json",
         } as SettingsData,
         servers: [],
         loadingPR: false
@@ -102,6 +103,12 @@ export function pluginStore(): Store<AppState> {
         state.settings = {
           ...state.settings,
           filePath: newValue
+        };
+      },
+      settingsSetCommitMessage(state: AppState, newValue: string) {
+        state.settings = {
+          ...state.settings,
+          commitMessage: newValue
         };
       },
       setLoadingPR(state: AppState, newValue: boolean) {

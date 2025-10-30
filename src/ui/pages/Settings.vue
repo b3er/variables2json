@@ -65,6 +65,13 @@ let filePath = computed({
     store.commit("settingsSetFilePath", path)
   }
 });
+
+let commitMessage = computed({
+  get: () => store.state.settings.commitMessage,
+  set: (message) => {
+    store.commit("settingsSetCommitMessage", message)
+  }
+});
 </script>
 
 <template>
@@ -110,6 +117,13 @@ let filePath = computed({
         <label>File Path</label>
         <div class="value">
           <input v-model="filePath" type="text" placeholder="variables.json" />
+        </div>
+      </div>
+
+      <div class="row regular">
+        <label>Commit Message</label>
+        <div class="value">
+          <input v-model="commitMessage" type="text" placeholder="update variables.json" />
         </div>
       </div>
 

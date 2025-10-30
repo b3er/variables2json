@@ -30,6 +30,7 @@ async function loadSettingsAsync(): Promise<SettingsData> {
     gitlabProject: "",
     defaultBranch: "main",
     filePath: "variables.json",
+    commitMessage: "update variables.json",
   };
 
   if (settingsOrNull) {
