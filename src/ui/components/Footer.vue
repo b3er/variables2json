@@ -14,6 +14,7 @@ let githubToken = computed<string>(() => store.state.settings.githubToken);
 let gitlabProject = computed<string>(() => store.state.settings.gitlabProject);
 let gitlabToken = computed<string>(() => store.state.settings.gitlabToken);
 let defaultBranch = computed<string>(() => store.state.settings.defaultBranch);
+let filePath = computed<string>(() => store.state.settings.filePath);
 let isLoading = ref(false);
 
 function downloadJson() {
@@ -21,9 +22,10 @@ function downloadJson() {
   let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(json);
 
   let el = document.getElementById("downloadEl");
+  const fileName = filePath.value.split('/').pop() || 'variables.json';
 
   el?.setAttribute("href", dataStr);
-  el?.setAttribute("download", "variables.json");
+  el?.setAttribute("download", fileName);
   el?.click();
 
   parent.postMessage({ pluginMessage: "notify-downloaded" }, "*");
@@ -41,7 +43,7 @@ let sendPr = async () => {
         store.commit("setLoadingPR", false);
         return;
       }
-      const pr = await createPR(repo.value, json, githubToken.value, defaultBranch.value);
+      const pr = await createPR(repo.value, json, githubToken.value, defaultBranch.value, filePath.value);
       store.commit("setLoadingPR", false);
       alert('Pull request created successfully! \n\n' + pr.html_url);
     } else if (provider.value === ProviderType.Gitlab) {
@@ -50,7 +52,7 @@ let sendPr = async () => {
         store.commit("setLoadingPR", false);
         return;
       }
-      const mr = await createGitLabMR(gitlabProject.value, json, gitlabToken.value, defaultBranch.value);
+      const mr = await createGitLabMR(gitlabProject.value, json, gitlabToken.value, defaultBranch.value, filePath.value);
       store.commit("setLoadingPR", false);
       alert('Merge request created successfully! \n\n' + mr.web_url);
     }

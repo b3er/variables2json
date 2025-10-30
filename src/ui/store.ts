@@ -26,6 +26,7 @@ export function pluginStore(): Store<AppState> {
           repo: "",
           gitlabProject: "",
           defaultBranch: "main",
+          filePath: "variables.json",
         } as SettingsData,
         servers: [],
         loadingPR: false
@@ -95,6 +96,12 @@ export function pluginStore(): Store<AppState> {
         state.settings = {
           ...state.settings,
           defaultBranch: newValue
+        };
+      },
+      settingsSetFilePath(state: AppState, newValue: string) {
+        state.settings = {
+          ...state.settings,
+          filePath: newValue
         };
       },
       setLoadingPR(state: AppState, newValue: boolean) {

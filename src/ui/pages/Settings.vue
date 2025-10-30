@@ -58,6 +58,13 @@ let defaultBranch = computed({
     store.commit("settingsSetDefaultBranch", branch)
   }
 });
+
+let filePath = computed({
+  get: () => store.state.settings.filePath,
+  set: (path) => {
+    store.commit("settingsSetFilePath", path)
+  }
+});
 </script>
 
 <template>
@@ -96,6 +103,13 @@ let defaultBranch = computed({
         <label>Default Branch</label>
         <div class="value">
           <input v-model="defaultBranch" type="text" placeholder="main" />
+        </div>
+      </div>
+
+      <div class="row regular">
+        <label>File Path</label>
+        <div class="value">
+          <input v-model="filePath" type="text" placeholder="variables.json" />
         </div>
       </div>
 
