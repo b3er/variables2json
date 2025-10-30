@@ -36,7 +36,7 @@ function downloadJson() {
 let sendPr = async () => {
   let json = jsonFromState(store.state);
   store.commit("setLoadingPR", true);
-  
+
   try {
     if (provider.value === ProviderType.Github) {
       if (!repo.value || !githubToken.value) {
@@ -73,7 +73,7 @@ let sendPr = async () => {
 
     <div class="icons">
       <a
-        href="https://github.com/mark-nicepants/variables2json-docs"
+        href="https://github.com/b3er/variables2json"
         target="_blank"
       >
         <Icon :type="IconType.Github" />

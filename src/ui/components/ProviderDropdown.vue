@@ -58,7 +58,7 @@ onClickOutside(target, () => {
         :key="provider.value"
         class="provider-option"
         :class="{ selected: provider.value == modelValue }"
-        @click="() => onSelect(provider.value)"
+        @click.stop="() => onSelect(provider.value)"
       >
         <div class="provider-icon" :style="{ color: provider.color }">
           <Icon :type="provider.icon" />
