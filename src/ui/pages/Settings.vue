@@ -1,11 +1,9 @@
 <script lang="ts" setup>
-import { computed } from "vue";
-import { useStore } from "@/store";
-import { IconType, ProviderType } from "@/models";
+import {computed} from "vue";
+import {useStore} from "@/store";
+import {ProviderType} from "@/models";
 import DropDown from "@/components/DropDown.vue";
 import ProviderDropdown from "@/components/ProviderDropdown.vue";
-import SyncSettingsList from "@/components/SyncSettingsList.vue";
-import Icon from "@/components/Icon.vue";
 
 let store = useStore();
 
@@ -83,14 +81,14 @@ let commitMessage = computed({
       <div class="row regular">
         <label>Don't export private name (leading underscore)</label>
         <div class="value">
-          <input v-model="excludePrivate" type="checkbox" />
+          <input v-model="excludePrivate" type="checkbox"/>
         </div>
       </div>
 
       <div class="row regular">
         <label>Color format</label>
         <div class="value">
-          <DropDown v-model="colorFormat" :options="['hex', 'rgba']" />
+          <DropDown v-model="colorFormat" :options="['hex', 'rgba']"/>
         </div>
       </div>
     </div>
@@ -98,32 +96,32 @@ let commitMessage = computed({
     <!-- Git Provider Settings -->
     <div class="section">
       <span class="title">Git Provider</span>
-      
+
       <div class="row regular">
         <label>Provider</label>
         <div class="value">
-          <ProviderDropdown v-model="provider" />
+          <ProviderDropdown v-model="provider"/>
         </div>
       </div>
 
       <div class="row regular">
         <label>Default Branch</label>
         <div class="value">
-          <input v-model="defaultBranch" type="text" placeholder="main" />
+          <input v-model="defaultBranch" type="text" placeholder="main"/>
         </div>
       </div>
 
       <div class="row regular">
         <label>File Path</label>
         <div class="value">
-          <input v-model="filePath" type="text" placeholder="variables.json" />
+          <input v-model="filePath" type="text" placeholder="variables.json"/>
         </div>
       </div>
 
       <div class="row regular">
         <label>Commit Message</label>
         <div class="value">
-          <input v-model="commitMessage" type="text" placeholder="update variables.json" />
+          <input v-model="commitMessage" type="text" placeholder="update variables.json"/>
         </div>
       </div>
 
@@ -132,14 +130,14 @@ let commitMessage = computed({
         <div class="row regular">
           <label>Repository (username/repo)</label>
           <div class="value">
-            <input v-model="repo" type="text" placeholder="owner/repo" />
+            <input v-model="repo" type="text" placeholder="owner/repo"/>
           </div>
         </div>
 
         <div class="row regular">
           <label>GitHub Token</label>
           <div class="value">
-            <input v-model="githubToken" type="password" />
+            <input v-model="githubToken" type="password"/>
           </div>
         </div>
       </template>
@@ -149,30 +147,30 @@ let commitMessage = computed({
         <div class="row regular">
           <label>Project Path (group/project)</label>
           <div class="value">
-            <input v-model="gitlabProject" type="text" placeholder="group/project" />
+            <input v-model="gitlabProject" type="text" placeholder="group/project"/>
           </div>
         </div>
 
         <div class="row regular">
           <label>GitLab Token</label>
           <div class="value">
-            <input v-model="gitlabToken" type="password" />
+            <input v-model="gitlabToken" type="password"/>
           </div>
         </div>
       </template>
     </div>
 
     <!-- Sync settings -->
-    <div class="section">
-      <div class="header">
-        <span class="title">Server sync</span>
-        <router-link to="/settings/add-server">
-          <Icon :type="IconType.Add" />
-        </router-link>
-      </div>
+    <!--    <div class="section">-->
+    <!--      <div class="header">-->
+    <!--        <span class="title">Server sync</span>-->
+    <!--        <router-link to="/settings/add-server">-->
+    <!--          <Icon :type="IconType.Add" />-->
+    <!--        </router-link>-->
+    <!--      </div>-->
 
-      <SyncSettingsList />
-    </div>
+    <!--      <SyncSettingsList />-->
+    <!--    </div>-->
   </div>
 </template>
 
