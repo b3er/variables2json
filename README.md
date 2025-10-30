@@ -10,7 +10,6 @@ A powerful Figma plugin that exports design variables (colors, typography, effec
 - 💬 **Custom Commit Messages** - Set your own commit messages and PR/MR titles
 - 🌿 **Configurable Target Branch** - Set your default target branch (main, master, develop, etc.)
 - 🔀 **Custom Branch Names** - Configure PR/MR branch names (e.g., `update-design-variables`)
-- ♻️ **Iterative Updates** - Push multiple commits to same branch to update existing MRs/PRs
 
 ## 🎯 Overview
 
@@ -129,10 +128,6 @@ Choose between **GitHub** or **GitLab** using the visual dropdown
 - **Commit Message:** Customize the commit and PR/MR title
   - Default: `update variables.json`
   - Examples: `feat: sync Figma variables`, `update design tokens`
-- **Branch Name:** Set the branch name for PRs/MRs
-  - Default: `update-design-variables`
-  - Examples: `feature/design-tokens`, `chore/sync-variables`
-  - If branch exists, it will be updated with new changes
 
 #### GitHub-Specific Settings
 When GitHub is selected:
@@ -226,10 +221,8 @@ The plugin exports variables in the following structure:
 - Multiple levels: `packages/design-tokens/src/variables.json`
 
 **Branch Naming:**
-- Configure branch name in settings (default: `update-design-variables`)
-- Branch name is used exactly as configured
-- If branch exists, new commits are pushed to the same branch
-- Allows updating existing MRs/PRs with new changes
+- Plugin automatically creates timestamped branches: `newVariables-{timestamp}`
+- Configure your default target branch in settings
 
 **Commit Messages:**
 - Use conventional commits: `feat: update design tokens`
@@ -246,11 +239,9 @@ The plugin exports variables in the following structure:
    - Default Branch: main
    - File Path: variables.json
    - Commit Message: update variables.json
-   - Branch Name: update-design-variables
 
 2. Export:
    - Click PR icon → Creates PR to mycompany/design-system
-   - Branch created: update-design-variables
    - File created at root: variables.json
    - PR title: "update variables.json"
 ```
@@ -263,28 +254,18 @@ The plugin exports variables in the following structure:
    - Default Branch: develop
    - File Path: src/tokens/figma-variables.json
    - Commit Message: feat: sync Figma design tokens
-   - Branch Name: feature/figma-sync
 
 2. Export:
    - Click PR icon → Creates MR to mygroup/design-tokens
-   - Branch created: feature/figma-sync
    - File created at: src/tokens/figma-variables.json
    - MR title: "feat: sync Figma design tokens"
 ```
 
-### Example 3: Updating Existing MR/PR
-```
-Workflow:
-1. First export → Creates branch "update-design-variables" with MR/PR
-2. Make changes in Figma
-3. Second export → Pushes new commit to same branch
-4. Existing MR/PR is automatically updated with new changes
-
-Benefits:
-- No need to create multiple MRs/PRs for iterative updates
-- Clean git history with single branch per feature
-- Easy review process with all changes in one MR/PR
-```
+### Example 3: Multiple Environments
+You can configure different settings for different environments:
+- **Development:** `develop` branch → `src/design/dev-tokens.json`
+- **Staging:** `staging` branch → `src/design/staging-tokens.json`
+- **Production:** `main` branch → `src/design/tokens.json`
 
 ## 🐛 Troubleshooting
 
@@ -299,12 +280,9 @@ Benefits:
 - Clear browser cache and reload plugin
 - Rebuild the plugin: `npm run build`
 
-**Q: Branch already exists error**
-- The plugin uses the configured branch name
-- If branch exists, it will push new commits to update it
-- To create a new branch, either:
-  - Delete the existing branch in GitHub/GitLab first
-  - Change the branch name in settings
+**Q: "File already exists" error**
+- The plugin creates a new branch each time, so file conflicts shouldn't occur
+- If error persists, check if file is locked or protected in your repository
 
 **Q: Provider dropdown not showing icons**
 - Make sure you've rebuilt after updating: `npm run build`
