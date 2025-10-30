@@ -148,7 +148,7 @@ The plugin exports variables in the following structure:
 
 ```json
 {
-  "version": "1.0.5",
+  "version": "1.0.6",
   "metadata": {},
   "collections": [
     {

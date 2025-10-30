@@ -9,7 +9,7 @@ async function getStateAsync(): Promise<AppState> {
   let variables = getVariables();
 
   return {
-    version: "1.0.5",
+    version: "1.0.6",
     loaded: true,
     variables: variables,
     settings: settings,
