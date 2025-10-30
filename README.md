@@ -117,9 +117,7 @@ Access settings through the navigation menu:
 ### Git Provider Settings
 
 #### Provider Selection
-Choose between **GitHub** or **GitLab** using the visual dropdown with branded icons:
-- 🐙 **GitHub** (dark gray icon)
-- 🦊 **GitLab** (orange icon)
+Choose between **GitHub** or **GitLab** using the visual dropdown
 
 #### Common Settings (Both Providers)
 - **Default Branch:** Configure your target branch (e.g., `main`, `master`, `develop`)
@@ -327,31 +325,6 @@ npm run build
 npm run lint
 npm run format
 ```
-
-### Project Structure
-```
-variables2json/
-├── src/
-│   ├── ui/                    # Vue.js UI components
-│   │   ├── components/        # Reusable components
-│   │   ├── pages/            # Settings, Variables views
-│   │   ├── helpers.ts        # GitHub/GitLab API functions
-│   │   ├── models.ts         # TypeScript interfaces
-│   │   └── store.ts          # Vuex state management
-│   └── code/                 # Figma plugin backend
-│       ├── code.ts           # Main plugin code
-│       └── modules/          # Variable extraction logic
-├── dist/                     # Built files (auto-generated)
-├── manifest.json            # Figma plugin manifest
-└── package.json            # Dependencies
-```
-
-## 📄 License
-
-ISC
-
-## 🙏 Acknowledgments
-
 Built with:
 - Vue 3
 - TypeScript
