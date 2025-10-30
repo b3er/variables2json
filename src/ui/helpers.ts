@@ -144,8 +144,8 @@ export async function createPR(repo: string, json: string, githubToken: string, 
   });
 
 
-  // Create a new branch with timestamp to avoid conflicts
-  const branchName = `${branchNamePrefix}-${Date.now()}`;
+  // Create a new branch
+  const branchName = branchNamePrefix;
     await githubApi.post(`/repos/${repo}/git/refs`, {
     ref: 'refs/heads/' + branchName,
     sha: commit.data.sha,
@@ -177,8 +177,8 @@ export async function createGitLabMR(project: string, json: string, gitlabToken:
     },
   });
 
-  // Create a new branch with timestamp to avoid conflicts
-  const branchName = `${branchNamePrefix}-${Date.now()}`;
+  // Create a new branch
+  const branchName = branchNamePrefix;
   await gitlabApi.post(`/projects/${encodedProject}/repository/branches`, {
     branch: branchName,
     ref: defaultBranch,
