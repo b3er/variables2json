@@ -9,7 +9,7 @@ async function getStateAsync(): Promise<AppState> {
   let variables = getVariables();
 
   return {
-    version: "1.0.6",
+    version: "1.0.7",
     loaded: true,
     variables: variables,
     settings: settings,
@@ -83,14 +83,14 @@ figma.clientStorage
   .then((options) => {
     if (options) _reposition(options as ResizeOptions);
   })
-  .catch((err) => {});
+  .catch((err) => { });
 
 function _reposition(options: ResizeOptions) {
   figma.ui.resize(options.w, options.h);
-  figma.clientStorage.setAsync("size", options).catch((err) => {});
+  figma.clientStorage.setAsync("size", options).catch((err) => { });
 }
 
 function _updateSettings(settings: SettingsData) {
   console.log("Saving updated settings");
-  figma.clientStorage.setAsync("settings", settings).catch((err) => {});
+  figma.clientStorage.setAsync("settings", settings).catch((err) => { });
 }

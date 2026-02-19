@@ -244,5 +244,7 @@ export function getVariables(): Array<VariableToken> {
     );
   });
 
+  variables.sort((a, b) => a.name.localeCompare(b.name));
+
   return variables;
 }
